@@ -79,27 +79,37 @@
 
     @if(config('app.social.flickr.enabled'))
         <a target="_blank" href="{{ config('app.social.flickr.url') }}"
-           class="flickr-icon block w-6 h-6 mx-4" title="Flickr"></a>
+           class="flex justify-center items-center h-full px-4" title="Flickr">
+            <span class="flickr-icon block w-6 h-6"></span>
+        </a>
     @endif
 
     @if(config('app.social.instagram.enabled'))
         <a target="_blank" href="{{ config('app.social.instagram.url') }}"
-           class="instagram-icon block w-6 h-6 mx-4" title="Instagram"></a>
+           class="flex justify-center items-center h-full px-4" title="Instagram">
+            <span class="instagram-icon block w-6 h-6"></span>
+        </a>
     @endif
 
     @if(config('app.social.web.enabled'))
         <a target="_blank" href="{{ config('app.social.web.url') }}"
-           class="website-icon block w-6 h-6 mx-4" title="Website"></a>
+           class="flex justify-center items-center h-full px-4" title="Website">
+            <span class="website-icon block w-6 h-6"></span>
+        </a>
     @endif
 
     @if(config('app.social.redbubble.enabled'))
         <a target="_blank" href="{{ config('app.social.redbubble.url') }}"
-           class="redbubble-icon block w-6 h-6 mx-4" title="Redbubble"></a>
+           class="flex justify-center items-center h-full px-4" title="Redbubble">
+            <span class="redbubble-icon block w-6 h-6"></span>
+        </a>
     @endif
 
     @if(config('app.social.fineartamerica.enabled'))
         <a target="_blank" href="{{ config('app.social.fineartamerica.url') }}"
-           class="fineartamerica-icon block w-6 h-6 mx-4" title="Fine Art America"></a>
+           class="flex justify-center items-center h-full px-4" title="Fine Art America">
+            <span class="fineartamerica-icon block w-6 h-6"></span>
+        </a>
     @endif
 
 </div>
