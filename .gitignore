@@ -33,6 +33,7 @@ _ide_*
 
 ### Webpack ###
 /public/css
+/public/fonts
 /public/img
 /public/js
 /public/mix-manifest.json
