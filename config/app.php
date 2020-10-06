@@ -15,6 +15,29 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'social' => [
+        'fineartamerica' => [
+            'enabled' => env('SOCIAL_FINEARTAMERICA_ENABLED', (env('SOCIAL_FINEARTAMERICA_URL', null) !== null)),
+            'url' => env('SOCIAL_FINEARTAMERICA_URL', null),
+        ],
+        'flickr' => [
+            'enabled' => env('SOCIAL_FLICKR_ENABLED', (env('SOCIAL_FLICKR_URL', null) !== null)),
+            'url' => env('SOCIAL_FLICKR_URL', null),
+        ],
+        'instagram' => [
+            'enabled' => env('SOCIAL_INSTAGRAM_ENABLED', (env('SOCIAL_INSTAGRAM_URL', null) !== null)),
+            'url' => env('SOCIAL_INSTAGRAM_URL', null),
+        ],
+        'redbubble' => [
+            'enabled' => env('SOCIAL_REDBUBBLE_ENABLED', (env('SOCIAL_REDBUBBLE_URL', null) !== null)),
+            'url' => env('SOCIAL_REDBUBBLE_URL', null),
+        ],
+        'web' => [
+            'enabled' => env('SOCIAL_WEB_ENABLED', (env('SOCIAL_WEB_URL', null) !== null)),
+            'url' => env('SOCIAL_WEB_URL', null),
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

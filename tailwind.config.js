@@ -23,8 +23,22 @@ module.exports = {
             zIndex: {
                 behind: '-1',
             },
+            opacity: {
+                '10': '0.1',
+            },
+            backdropFilter: {
+                'none': 'none',
+                'blur-1': 'blur(1px)',
+                'blur-3': 'blur(3px)',
+                'blur-5': 'blur(5px)',
+                'blur-10': 'blur(10px)',
+                'blur-15': 'blur(15px)',
+                'blur-20': 'blur(20px)',
+            },
         },
     },
     variants: {},
-    plugins: [],
+    plugins: [
+        require('tailwindcss-filters'),
+    ],
 };

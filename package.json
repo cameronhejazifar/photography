@@ -18,6 +18,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "tailwindcss": "^1.8.10"
+        "tailwindcss": "^1.8.10",
+        "tailwindcss-filters": "^3.0.0"
     }
 }
