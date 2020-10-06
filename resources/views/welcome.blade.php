@@ -63,9 +63,9 @@
 
 <!-- Nav Bar -->
 <div class="w-full h-24 flex flex-row items-center justify-center bg-black bg-opacity-10 backdrop-blur-10">
-    <a href="{{ route('home') }}" class="mx-4 uppercase text-white text-opacity-75 hover:text-opacity-100">Home</a>
-    <a href="{{ route('browse') }}" class="mx-4 uppercase text-white text-opacity-75 hover:text-opacity-100">Browse</a>
-    <a href="{{ route('about') }}" class="mx-4 uppercase text-white text-opacity-75 hover:text-opacity-100">About</a>
+    <a href="{{ route('home') }}" class="mx-4 text-lg uppercase text-white text-opacity-75 hover:text-opacity-100">Home</a>
+    <a href="{{ route('browse') }}" class="mx-4 text-lg uppercase text-white text-opacity-75 hover:text-opacity-100">Browse</a>
+    <a href="{{ route('about') }}" class="mx-4 text-lg uppercase text-white text-opacity-75 hover:text-opacity-100">About</a>
 </div>
 
 <!-- Logo -->
