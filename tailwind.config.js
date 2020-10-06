@@ -16,15 +16,13 @@ module.exports = {
             },
             fontSize: {
                 logo: '8rem',
+                xxs: '0.4rem',
             },
             letterSpacing: {
                 logo: '1rem',
             },
             zIndex: {
                 behind: '-1',
-            },
-            opacity: {
-                '10': '0.1',
             },
             backdropFilter: {
                 'none': 'none',
