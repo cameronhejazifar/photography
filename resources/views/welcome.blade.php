@@ -62,7 +62,11 @@
 <div class="background fixed inset-0 w-full h-full z-behind pointer-events-none select-none"></div>
 
 <!-- Nav Bar -->
-<div class="w-full h-24 flex flex-row items-center justify-center bg-black bg-opacity-10 backdrop-blur-10"></div>
+<div class="w-full h-24 flex flex-row items-center justify-center bg-black bg-opacity-10 backdrop-blur-10">
+    <a href="{{ route('home') }}" class="mx-4 uppercase text-white text-opacity-75 hover:text-opacity-100">Home</a>
+    <a href="{{ route('browse') }}" class="mx-4 uppercase text-white text-opacity-75 hover:text-opacity-100">Browse</a>
+    <a href="{{ route('about') }}" class="mx-4 uppercase text-white text-opacity-75 hover:text-opacity-100">About</a>
+</div>
 
 <!-- Logo -->
 <div class="p-20 flex flex-col items-center justify-center pointer-events-none select-none">
