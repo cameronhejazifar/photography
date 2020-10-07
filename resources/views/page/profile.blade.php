@@ -18,6 +18,18 @@
             <form method="POST" action="{{ route('profile') }}" class="w-full md:w-1/2 md:pr-5">
                 @csrf
 
+                <!-- Account Active -->
+                <div class="mb-4">
+                    <label class="block text-gray-900 text-sm font-bold mb-2" for="active">
+                        <input class="mr-2 leading-tight" type="checkbox" id="active" name="active"
+                            {{ Auth::user()->active ? 'checked' : '' }} value="1">
+                        <span>Account Active</span>
+                    </label>
+                    @error('active')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Email -->
                 <div class="mb-4">
                     <label class="block text-gray-900 text-sm font-bold mb-2" for="email">
@@ -110,7 +122,7 @@
                 <!-- Password -->
                 <div class="mb-6">
                     <label class="block text-gray-900 text-sm font-bold mb-2" for="old_password">
-                        Password Update
+                        Update Password
                     </label>
                     <input type="password" id="old_password" name="old_password" placeholder="Old Password"
                            class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
@@ -133,7 +145,7 @@
                 <!-- Change Password Button -->
                 <button type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
-                    Change Password
+                    Update Password
                 </button>
             </form>
 

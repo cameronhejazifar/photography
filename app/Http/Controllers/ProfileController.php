@@ -43,12 +43,14 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $data = $this->validate($request, [
+            'active' => 'sometimes|boolean',
             'name' => 'required|string|between:2,255',
             'alias' => 'present|string|between:2,255|nullable',
             'date_of_birth' => 'present|date|date_format:Y-m-d|nullable',
             'biography' => 'present|string|between:0,4000|nullable',
             'photograph_checklist' => 'present|string|between:0,4000|nullable',
         ]);
+        $data['active'] = array_key_exists('active', $data) && $data['active'] === '1';
 
         /** @var User $user */
         $user = Auth::user();
