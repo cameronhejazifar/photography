@@ -17,23 +17,23 @@ return [
 
     'social' => [
         'fineartamerica' => [
-            'enabled' => env('SOCIAL_FINEARTAMERICA_ENABLED', (env('SOCIAL_FINEARTAMERICA_URL', null) !== null)),
+            'enabled' => env('SOCIAL_FINEARTAMERICA_ENABLED', strlen(env('SOCIAL_FINEARTAMERICA_URL', null)) > 0),
             'url' => env('SOCIAL_FINEARTAMERICA_URL', null),
         ],
         'flickr' => [
-            'enabled' => env('SOCIAL_FLICKR_ENABLED', (env('SOCIAL_FLICKR_URL', null) !== null)),
+            'enabled' => env('SOCIAL_FLICKR_ENABLED', strlen(env('SOCIAL_FLICKR_URL', null)) > 0),
             'url' => env('SOCIAL_FLICKR_URL', null),
         ],
         'instagram' => [
-            'enabled' => env('SOCIAL_INSTAGRAM_ENABLED', (env('SOCIAL_INSTAGRAM_URL', null) !== null)),
+            'enabled' => env('SOCIAL_INSTAGRAM_ENABLED', strlen(env('SOCIAL_INSTAGRAM_URL', null)) > 0),
             'url' => env('SOCIAL_INSTAGRAM_URL', null),
         ],
         'redbubble' => [
-            'enabled' => env('SOCIAL_REDBUBBLE_ENABLED', (env('SOCIAL_REDBUBBLE_URL', null) !== null)),
+            'enabled' => env('SOCIAL_REDBUBBLE_ENABLED', strlen(env('SOCIAL_REDBUBBLE_URL', null)) > 0),
             'url' => env('SOCIAL_REDBUBBLE_URL', null),
         ],
         'web' => [
-            'enabled' => env('SOCIAL_WEB_ENABLED', (env('SOCIAL_WEB_URL', null) !== null)),
+            'enabled' => env('SOCIAL_WEB_ENABLED', strlen(env('SOCIAL_WEB_URL', null)) > 0),
             'url' => env('SOCIAL_WEB_URL', null),
         ],
     ],
