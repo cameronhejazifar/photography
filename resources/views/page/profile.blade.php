@@ -6,6 +6,12 @@
 
         <h1 class="text-2xl mb-10">My Profile</h1>
 
+        @if (session('status'))
+            <p class="mb-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm rounded">
+                {{ session('status') }}
+            </p>
+        @endif
+
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Profile Info Form -->
@@ -93,6 +99,41 @@
                 <button type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
                     Update Profile
+                </button>
+            </form>
+
+
+            <!-- Profile Info Form -->
+            <form method="POST" action="{{ route('profile.password') }}" class="w-full md:w-1/2 md:pl-5 mt-20 md:mt-0">
+                @csrf
+
+                <!-- Password -->
+                <div class="mb-6">
+                    <label class="block text-gray-900 text-sm font-bold mb-2" for="old_password">
+                        Password Update
+                    </label>
+                    <input type="password" id="old_password" name="old_password" placeholder="Old Password"
+                           class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                    @error('old_password')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                    <input type="password" id="new_password" name="new_password" placeholder="New Password"
+                           class="appearance-none border border-gray-600 rounded mt-2 w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                    @error('new_password')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                    <input type="password" id="new_password_confirmation" name="new_password_confirmation"
+                           placeholder="Confirm New Password"
+                           class="appearance-none border border-gray-600 rounded mt-2 w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                    @error('new_password_confirmation')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Change Password Button -->
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                    Change Password
                 </button>
             </form>
 

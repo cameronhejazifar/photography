@@ -25,3 +25,4 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update'])->name('profile');
+Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');

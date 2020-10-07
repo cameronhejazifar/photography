@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Auth;
+use Hash;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Str;
 
 class ProfileController extends Controller
 {
@@ -30,6 +34,8 @@ class ProfileController extends Controller
     }
 
     /**
+     * Updates the user's profile information.
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Throwable
@@ -50,5 +56,37 @@ class ProfileController extends Controller
         $user->saveOrFail();
 
         return redirect()->intended(route('profile'));
+    }
+
+    /**
+     * Updates the user's password.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Throwable
+     */
+    public function updatePassword(Request $request)
+    {
+        $data = $this->validate($request, [
+            'old_password' => 'required|string|min:8',
+            'new_password' => 'required|string|confirmed|min:8',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (!Hash::check($data['old_password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'old_password' => 'The old password appears to be incorrect.',
+            ]);
+        }
+
+        $user->password = Hash::make($data['new_password']);
+        $user->setRememberToken(Str::random(60));
+        $user->saveOrFail();
+        event(new PasswordReset($user));
+        Auth::login($user);
+
+        return redirect()->intended(route('profile'))->with('status', 'Password successfully updated.');
     }
 }

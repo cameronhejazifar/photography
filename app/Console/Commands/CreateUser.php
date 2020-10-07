@@ -50,7 +50,7 @@ class CreateUser extends Command
                 'name' => $this->ask('Enter Full Name'),
             ], [
                 'email' => 'required|email|unique:users',
-                'password' => 'required|string|between:5,100',
+                'password' => 'required|string|min:8',
                 'name' => 'required|string|between:2,255',
             ]);
         } catch (ValidationException $e) {

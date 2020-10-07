@@ -3,7 +3,7 @@
 @else
     <div class="w-full h-16 md:h-24 bg-transparent relative pointer-events-none select-none z-behind"></div>
 @endif
-<div class="w-full bg-black bg-opacity-25 backdrop-blur-10 fixed flex flex-col items-center justify-center z-10">
+<div class="w-full bg-black bg-opacity-25 backdrop-blur-10 fixed flex flex-col items-center justify-center shadow z-10">
 
     @if($navLogo)
         <a href="{{ route('home') }}" style="margin-bottom: -24px" class="h-12 z-10">
