@@ -14,7 +14,7 @@
         </a>
     @endif
 
-    <div class="h-16 md:h-24 w-full max-w-screen-xl {{ $navLogo ? 'mt-2 md:mt-4' : '' }} flex flex-row items-center justify-center">
+    <div class="h-16 md:h-24 w-full max-w-screen-xl {{ $navLogo ? 'mt-2 md:mt-4 pt-2 md:pt-4' : '' }} flex flex-row items-center justify-center">
         <a href="{{ route('home') }}"
            class="mx-4 text-md md:text-lg uppercase text-white text-opacity-75 hover:text-opacity-100 transition-all duration-200 ease-in-out">
             Home
