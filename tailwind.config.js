@@ -16,10 +16,12 @@ module.exports = {
             },
             fontSize: {
                 logo: '8rem',
+                'logo-mobile': '4rem',
                 xxs: '0.4rem',
             },
             letterSpacing: {
                 logo: '1rem',
+                'logo-mobile': '0.6rem',
             },
             zIndex: {
                 behind: '-1',

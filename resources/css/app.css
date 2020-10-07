@@ -1,31 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-
-@font-face {
-    font-family: 'Signerica';
-    font-style: normal;
-    font-weight: 100;
-    font-display: swap;
-    src: url('/fonts/Signerica/SignericaThin.eot?#iefix') format('embedded-opentype'), url('/fonts/Signerica/SignericaThin.woff') format('woff'), url('/fonts/Signerica/SignericaThin.ttf') format('truetype'), url('/fonts/Signerica/SignericaThin.svg#SignericaThin') format('svg');
-}
-
-@font-face {
-    font-family: 'Signerica';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('/fonts/Signerica/SignericaMedium.eot?#iefix') format('embedded-opentype'), url('/fonts/Signerica/SignericaMedium.woff') format('woff'), url('/fonts/Signerica/SignericaMedium.ttf') format('truetype'), url('/fonts/Signerica/SignericaMedium.svg#SignericaMedium') format('svg');
-}
-
-@font-face {
-    font-family: 'Signerica';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url('/fonts/Signerica/SignericaFat.eot?#iefix') format('embedded-opentype'), url('/fonts/Signerica/SignericaFat.woff') format('woff'), url('/fonts/Signerica/SignericaFat.ttf') format('truetype'), url('/fonts/Signerica/SignericaFat.svg#SignericaFat') format('svg');
-}
+@import './fonts.css';
 
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
+
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.background {
+    background-color: black;
+    background-image: url('/img/background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.instagram-icon {
+    background: transparent url('/img/footer/instagram.png') no-repeat center center;
+    background-size: contain;
+}
+
+.flickr-icon {
+    background: transparent url('/img/footer/flickr.png') no-repeat center center;
+    background-size: contain;
+}
+
+.website-icon {
+    background: transparent url('/img/footer/website.png') no-repeat center center;
+    background-size: contain;
+}
+
+.redbubble-icon {
+    background: transparent url('/img/footer/redbubble.png') no-repeat center center;
+    background-size: contain;
+}
+
+.fineartamerica-icon {
+    background: transparent url('/img/footer/fineartamerica.png') no-repeat center center;
+    background-size: contain;
+}
