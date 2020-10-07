@@ -8,28 +8,31 @@
 
         <h1 class="text-2xl mb-10">Login</h1>
 
+        <!-- Email -->
         <div class="mb-4">
             <label class="block text-gray-900 text-sm font-bold mb-2" for="email">
                 Email
             </label>
-            <input type="text" id="email" name="email" placeholder="Email" autofocus
-                   class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+            <input type="email" id="email" name="email" placeholder="Email" autofocus
+                   class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
             @error('email')
-                <p class="text-red-700 text-sm italic">{{ $message }}</p>
+            <p class="text-red-700 text-sm italic">{{ $message }}</p>
             @enderror
         </div>
 
+        <!-- Password -->
         <div class="mb-6">
             <label class="block text-gray-900 text-sm font-bold mb-2" for="password">
                 Password
             </label>
             <input type="password" id="password" name="password" placeholder="Password"
-                   class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                   class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
             @error('password')
-                <p class="text-red-700 text-sm italic">{{ $message }}</p>
+            <p class="text-red-700 text-sm italic">{{ $message }}</p>
             @enderror
         </div>
 
+        <!-- Sign In Button -->
         <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
             Sign In

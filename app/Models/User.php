@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,21 +33,27 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $alias
+ * @property \Illuminate\Support\Carbon|null $date_of_birth
+ * @property string|null $biography
+ * @property string|null $photograph_checklist
+ * @property int $active
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAlias($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereBiography($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhotographChecklist($value)
  */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Indicates if all mass assignment is enabled.
      *
-     * @var array
+     * @var bool
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected static $unguarded = true;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -65,5 +72,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'date_of_birth' => 'date',
     ];
 }
