@@ -27,5 +27,15 @@
            class="mx-4 text-md md:text-lg uppercase text-white text-opacity-75 hover:text-opacity-100 transition-all duration-200 ease-in-out">
             About
         </a>
+        @auth
+            <a href="{{ route('profile') }}"
+               class="mx-4 text-md md:text-lg uppercase text-white text-opacity-75 hover:text-opacity-100 transition-all duration-200 ease-in-out">
+                Profile
+            </a>
+            <a href="{{ route('logout') }}"
+               class="mx-4 text-md md:text-lg uppercase text-white text-opacity-75 hover:text-opacity-100 transition-all duration-200 ease-in-out">
+                Logout
+            </a>
+        @endif
     </div>
 </div>
