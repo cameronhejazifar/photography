@@ -24,28 +24,3 @@ body {
     background-position: center center;
     background-size: cover;
 }
-
-.instagram-icon {
-    background: transparent url('/img/footer/instagram.png') no-repeat center center;
-    background-size: contain;
-}
-
-.flickr-icon {
-    background: transparent url('/img/footer/flickr.png') no-repeat center center;
-    background-size: contain;
-}
-
-.website-icon {
-    background: transparent url('/img/footer/website.png') no-repeat center center;
-    background-size: contain;
-}
-
-.redbubble-icon {
-    background: transparent url('/img/footer/redbubble.png') no-repeat center center;
-    background-size: contain;
-}
-
-.fineartamerica-icon {
-    background: transparent url('/img/footer/fineartamerica.png') no-repeat center center;
-    background-size: contain;
-}
