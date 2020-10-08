@@ -74,4 +74,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'date_of_birth' => 'date',
     ];
+
+    /**
+     * Returns all profile icons associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function profileIcons()
+    {
+        return $this->hasMany(ProfileIcon::class)->orderByDesc('created_at');
+    }
+
+    /**
+     * Returns all profile icons associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function profilePictures()
+    {
+        return $this->hasMany(ProfilePicture::class)->orderByDesc('created_at');
+    }
 }

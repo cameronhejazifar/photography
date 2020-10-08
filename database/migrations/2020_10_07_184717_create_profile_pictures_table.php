@@ -15,10 +15,10 @@ class CreateProfilePicturesTable extends Migration
         Schema::create('profile_pictures', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
-            $table->binary('image_data');
             $table->timestamps();
             $table->softDeletes();
         });
+        DB::statement("ALTER TABLE `profile_pictures` ADD `image_data` LONGBLOB AFTER `user_id`");
     }
 
     /**

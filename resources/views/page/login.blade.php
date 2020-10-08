@@ -13,7 +13,7 @@
             <label class="block text-gray-900 text-sm font-bold mb-2" for="email">
                 Email
             </label>
-            <input type="email" id="email" name="email" placeholder="Email" autofocus
+            <input type="email" name="email" placeholder="Email" autofocus
                    class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
             @error('email')
             <p class="text-red-700 text-sm italic">{{ $message }}</p>
@@ -25,7 +25,7 @@
             <label class="block text-gray-900 text-sm font-bold mb-2" for="password">
                 Password
             </label>
-            <input type="password" id="password" name="password" placeholder="Password"
+            <input type="password" name="password" placeholder="Password"
                    class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
             @error('password')
             <p class="text-red-700 text-sm italic">{{ $message }}</p>
