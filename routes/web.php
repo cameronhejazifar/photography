@@ -14,6 +14,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrowseController;
+use App\Http\Controllers\GoogleDriveOAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PhotographController;
 use App\Http\Controllers\ProfileController;
@@ -37,3 +38,7 @@ Route::post('/profile/picture', [ProfileController::class, 'uploadProfilePicture
 
 // Photo Management
 Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
+
+// Google Drive
+Route::get('/googledrive/oauth', [GoogleDriveOAuthController::class, 'tryOAuth'])->name('googledrive');
+Route::get('/googledrive/oauth/redirect', [GoogleDriveOAuthController::class, 'handleOAuthResponse'])->name('googledrive.redirect');

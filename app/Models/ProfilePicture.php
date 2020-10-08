@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Abstracts\ImageModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\ProfilePicture
@@ -28,10 +27,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|ProfilePicture onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProfilePicture withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProfilePicture withoutTrashed()
+ * @property string $disk
+ * @property string $directory
+ * @property string $filename
+ * @property string $filetype
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereDirectory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereDisk($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereFilename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereFiletype($value)
  */
 class ProfilePicture extends ImageModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * Get the User this picture belongs to.

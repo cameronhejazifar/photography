@@ -43,6 +43,12 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereBiography($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhotographChecklist($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProfileIcon[] $profileIcons
+ * @property-read int|null $profile_icons_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProfilePicture[] $profilePictures
+ * @property-read int|null $profile_pictures_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GoogleDriveOauth[] $googleDriveOauth
+ * @property-read int|null $google_drive_oauth_count
  */
 class User extends Authenticatable
 {
@@ -82,25 +88,7 @@ class User extends Authenticatable
      */
     public function profileIcons()
     {
-        return $this->hasMany(ProfileIcon::class)->orderByDesc('created_at');
-    }
-
-    public function profileIconURL()
-    {
-        $icon = $this->profileIcons()->first();
-        if ($icon) {
-            return $icon->imageURL();
-        }
-        return asset('img/profile-icon.png');
-    }
-
-    public function profilePictureURL()
-    {
-        $picture = $this->profilePictures()->first();
-        if ($picture) {
-            return $picture->imageURL();
-        }
-        return asset('img/profile-picture.png');
+        return $this->hasMany(ProfileIcon::class);
     }
 
     /**
@@ -110,6 +98,34 @@ class User extends Authenticatable
      */
     public function profilePictures()
     {
-        return $this->hasMany(ProfilePicture::class)->orderByDesc('created_at');
+        return $this->hasMany(ProfilePicture::class);
+    }
+
+    /**
+     * Returns all profile icons associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function googleDriveOauth()
+    {
+        return $this->hasMany(GoogleDriveOauth::class);
+    }
+
+    public function profileIconURL()
+    {
+        $icon = $this->profileIcons()->latest()->first();
+        if ($icon) {
+            return $icon->imageURL();
+        }
+        return asset('img/profile-icon.png');
+    }
+
+    public function profilePictureURL()
+    {
+        $picture = $this->profilePictures()->latest()->first();
+        if ($picture) {
+            return $picture->imageURL();
+        }
+        return asset('img/profile-picture.png');
     }
 }

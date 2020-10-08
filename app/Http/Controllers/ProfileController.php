@@ -127,12 +127,6 @@ class ProfileController extends Controller
         $icon->storeImage($image);
         $icon->saveOrFail();
 
-        // Soft delete old profile icons
-        ProfileIcon::where('user_id', '=', Auth::user()->id)
-            ->where('id', '!=', $icon->id)
-            ->whereNull('deleted_at')
-            ->delete();
-
         // Return the response
         return redirect()->back()->with('status', 'Profile icon successfully updated.');
     }
@@ -166,12 +160,6 @@ class ProfileController extends Controller
         $picture->user()->associate(Auth::user());
         $picture->storeImage($image);
         $picture->saveOrFail();
-
-        // Soft delete old profile pictures
-        ProfilePicture::where('user_id', '=', Auth::user()->id)
-            ->where('id', '!=', $picture->id)
-            ->whereNull('deleted_at')
-            ->delete();
 
         // Return the response
         return redirect()->back()->with('status', 'Profile picture successfully updated.');

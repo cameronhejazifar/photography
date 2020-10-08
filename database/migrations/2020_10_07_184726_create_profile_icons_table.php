@@ -20,7 +20,6 @@ class CreateProfileIconsTable extends Migration
             $table->string('filename');
             $table->string('filetype');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

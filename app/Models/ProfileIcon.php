@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Abstracts\ImageModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\ProfileIcon
@@ -28,10 +27,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|ProfileIcon onlyTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProfileIcon withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProfileIcon withoutTrashed()
+ * @property string $disk
+ * @property string $directory
+ * @property string $filename
+ * @property string $filetype
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereDirectory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereDisk($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereFilename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereFiletype($value)
  */
 class ProfileIcon extends ImageModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * Get the User this icon belongs to.

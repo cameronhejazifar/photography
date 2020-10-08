@@ -6,11 +6,19 @@
 
         <h1 class="text-2xl mb-10">New Photograph</h1>
 
-        <a href="/"
-           class="inline-flex flex-col items-center justify-center py-4 px-8 bg-white border border-gray-600 rounded hover:border-gray-800 focus:bg-gray-200">
-            <span class="text-sm">Click to authorize access</span>
-            <img class="w-48 h-auto mt-2" src="{{ asset('img/services/google-drive.svg') }}" alt="Google Drive™" title="Google Drive™"/>
-        </a>
+        <div class="flex flex-row items-center justify-start">
+            <a href="/" id="link-google-drive"
+               class="inline-flex flex-col items-center justify-center py-4 px-8 bg-white border border-gray-600 rounded hover:border-gray-800 focus:bg-gray-200">
+                <span class="text-sm">Click to re-authorize</span>
+                <img class="w-48 h-auto mt-2" src="{{ asset('img/services/google-drive.svg') }}" alt="Google Drive™" title="Google Drive™"/>
+            </a>
+            <span id="googledrive-auth-success" class="hidden ml-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm rounded">
+                Successfully authorized.
+            </span>
+            <span id="googledrive-auth-failure" class="hidden ml-5 p-2 bg-red-200 border border-red-900 text-red-900 text-sm rounded">
+                Authorization failed.
+            </span>
+        </div>
 
     </div>
 
