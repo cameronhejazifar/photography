@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Abstracts\ImageModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property int $user_id
- * @property mixed $image_data
+ * @property string $image_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereImageData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfilePicture whereUserId($value)
  * @mixin \Eloquent
@@ -29,16 +29,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|ProfilePicture withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProfilePicture withoutTrashed()
  */
-class ProfilePicture extends Model
+class ProfilePicture extends ImageModel
 {
     use HasFactory, SoftDeletes;
-
-    /**
-     * Indicates if all mass assignment is enabled.
-     *
-     * @var bool
-     */
-    protected static $unguarded = true;
 
     /**
      * Get the User this picture belongs to.

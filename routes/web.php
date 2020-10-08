@@ -27,6 +27,4 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update'])->name('profile');
 Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 Route::post('/profile/icon', [ProfileController::class, 'uploadProfileIcon'])->name('profile.upload-icon');
-Route::get('/profile/{user}/icon', [ProfileController::class, 'renderProfileIcon'])->name('profile.icon');
 Route::post('/profile/picture', [ProfileController::class, 'uploadProfilePicture'])->name('profile.upload-picture');
-Route::get('/profile/{user}/picture', [ProfileController::class, 'renderProfilePicture'])->name('profile.picture');

@@ -85,6 +85,24 @@ class User extends Authenticatable
         return $this->hasMany(ProfileIcon::class)->orderByDesc('created_at');
     }
 
+    public function profileIconURL()
+    {
+        $icon = $this->profileIcons()->first();
+        if ($icon) {
+            return $icon->imageURL();
+        }
+        return asset('img/profile-icon.png');
+    }
+
+    public function profilePictureURL()
+    {
+        $picture = $this->profilePictures()->first();
+        if ($picture) {
+            return $picture->imageURL();
+        }
+        return asset('img/profile-picture.png');
+    }
+
     /**
      * Returns all profile icons associated with the user.
      *

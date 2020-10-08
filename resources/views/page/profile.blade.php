@@ -26,7 +26,7 @@
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
-            <div class="w-full md:w-1/2 md:pr-5 border-r border-gray-700">
+            <div class="w-full md:w-1/2 md:pr-10 border-r border-gray-700">
 
                 <!-- Profile Info Form -->
                 <form method="POST" action="{{ route('profile') }}">
@@ -168,7 +168,7 @@
             <span class="block md:hidden w-11/12 h-px mt-10 mx-auto bg-gray-700"></span>
 
             <!-- Right Column -->
-            <div class="w-full md:w-1/2 md:pl-5 mt-10 md:mt-0">
+            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
 
                 <!-- Profile Icon Form -->
                 <form method="POST" action="{{ route('profile.upload-icon') }}" enctype="multipart/form-data">
@@ -182,7 +182,7 @@
                     <!-- Icon -->
                     <img class="w-12 h-12 mb-4 rounded-full object-cover"
                          alt="{{ Auth::user()->alias }}" title="{{ Auth::user()->alias }}"
-                         src="{{ route('profile.icon', ['user' => Auth::user()->id]) }}"/>
+                         src="{{ Auth::user()->profileIconURL() }}?refresh={{ Str::random(10) }}"/>
 
                     <!-- Icon + Image Selector -->
                     <div class="flex flex-row flex-no-wrap items-center justify-start">
@@ -214,7 +214,7 @@
                     <!-- Picture -->
                     <img class="w-auto h-64 mb-4 object-contain"
                          alt="{{ Auth::user()->alias }}" title="{{ Auth::user()->alias }}"
-                         src="{{ route('profile.picture', ['user' => Auth::user()->id]) }}"/>
+                         src="{{ Auth::user()->profilePictureURL() }}?refresh={{ Str::random(10) }}"/>
 
                     <!-- Image Selector -->
                     <div class="flex flex-row flex-no-wrap items-center justify-start">
@@ -242,7 +242,7 @@
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
-            <div class="w-full md:w-1/2 md:pr-5">
+            <div class="w-full md:w-1/2 md:pr-10">
                 <!-- TODO: add services here -->
                 Placeholder for services, ie: Google Drive, Nixplay, FineArtsAmerica, etc.
             </div>

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Abstracts\ImageModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property int $user_id
- * @property mixed $image_data
+ * @property string $image_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereImageData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProfileIcon whereUserId($value)
  * @mixin \Eloquent
@@ -29,16 +29,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|ProfileIcon withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ProfileIcon withoutTrashed()
  */
-class ProfileIcon extends Model
+class ProfileIcon extends ImageModel
 {
     use HasFactory, SoftDeletes;
-
-    /**
-     * Indicates if all mass assignment is enabled.
-     *
-     * @var bool
-     */
-    protected static $unguarded = true;
 
     /**
      * Get the User this icon belongs to.

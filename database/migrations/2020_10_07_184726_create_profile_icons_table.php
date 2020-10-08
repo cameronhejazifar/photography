@@ -15,10 +15,13 @@ class CreateProfileIconsTable extends Migration
         Schema::create('profile_icons', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
+            $table->string('disk');
+            $table->string('directory');
+            $table->string('filename');
+            $table->string('filetype');
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::statement("ALTER TABLE `profile_icons` ADD `image_data` LONGBLOB AFTER `user_id`");
     }
 
     /**
