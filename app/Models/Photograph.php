@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereUpdatedAt($value)
+ * @property int $user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereUserId($value)
  */
 class Photograph extends Model
 {
@@ -41,4 +43,14 @@ class Photograph extends Model
      * @var bool
      */
     protected static $unguarded = true;
+
+    /**
+     * Get the User this icon belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

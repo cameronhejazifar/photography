@@ -30,7 +30,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Profile
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update'])->name('profile');
 Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 Route::post('/profile/icon', [ProfileController::class, 'uploadProfileIcon'])->name('profile.upload-icon');
@@ -39,7 +39,7 @@ Route::post('/profile/picture', [ProfileController::class, 'uploadProfilePicture
 // Photo Management
 Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
 Route::post('/photograph', [PhotographController::class, 'create'])->name('photograph.create');
-Route::get('/photograph/{photo}', [PhotographController::class, 'showEditPhotographForm'])->name('photograph.edit');
+Route::get('/photograph/{photo}', [PhotographController::class, 'showEditPhotographForm'])->middleware('is-owner:photo')->name('photograph.edit');
 
 // Google Drive
 Route::get('/googledrive/oauth', [GoogleDriveOAuthController::class, 'tryOAuth'])->name('googledrive');

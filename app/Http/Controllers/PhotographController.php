@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Photograph;
+use Auth;
 use Illuminate\Http\Request;
 
 class PhotographController extends Controller
@@ -60,6 +61,7 @@ class PhotographController extends Controller
         $photo = new Photograph($data);
         $photo->tags = json_encode($photo->tags);
         $photo->active = true;
+        $photo->user()->associate(Auth::user());
         $photo->saveOrFail();
 
         // Return the response

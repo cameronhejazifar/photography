@@ -14,6 +14,7 @@ class CreatePhotographsTable extends Migration
     {
         Schema::create('photographs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('guid')->index();
             $table->string('name');
             $table->string('location');

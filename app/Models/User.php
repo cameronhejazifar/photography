@@ -100,13 +100,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Returns all profile icons associated with the user.
+     * Returns all google drive OAuth records.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function googleDriveOauth()
     {
         return $this->hasMany(GoogleDriveOauth::class);
+    }
+
+    /**
+     * Returns all photographs that belong to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographs()
+    {
+        return $this->hasMany(Photograph::class);
     }
 
     public function profileIconURL()

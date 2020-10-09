@@ -29,11 +29,11 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the profile page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function show()
     {
         return view('page.profile');
     }
