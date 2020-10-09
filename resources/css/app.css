@@ -24,3 +24,11 @@ body {
     background-position: center center;
     background-size: cover;
 }
+
+.close {
+    background-color: transparent;
+    background-image: url('/img/icons/close.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}

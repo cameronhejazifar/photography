@@ -38,6 +38,8 @@ Route::post('/profile/picture', [ProfileController::class, 'uploadProfilePicture
 
 // Photo Management
 Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
+Route::post('/photograph', [PhotographController::class, 'create'])->name('photograph.create');
+Route::get('/photograph/{photo}', [PhotographController::class, 'showEditPhotographForm'])->name('photograph.edit');
 
 // Google Drive
 Route::get('/googledrive/oauth', [GoogleDriveOAuthController::class, 'tryOAuth'])->name('googledrive');

@@ -49,7 +49,7 @@
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="email">
                             Email
                         </label>
-                        <input type="email" name="email" placeholder="Email" value="{{Auth::user()->email }}"
+                        <input type="email" name="email" placeholder="Email" value="{{ Auth::user()->email }}"
                                readonly
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 cursor-not-allowed opacity-50 leading-tight focus:outline-none focus:shadow-outline bg-white duration-200 ease-in-out">
                         @error('email')
@@ -62,7 +62,7 @@
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="name">
                             Full Name
                         </label>
-                        <input type="text" name="name" placeholder="Name" value="{{Auth::user()->name }}"
+                        <input type="text" name="name" placeholder="Name" value="{{ Auth::user()->name }}"
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
                         @error('name')
                         <p class="text-red-700 text-sm italic">{{ $message }}</p>
@@ -74,7 +74,7 @@
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="alias">
                             Alias (Display Name)
                         </label>
-                        <input type="text" name="alias" placeholder="Alias" value="{{Auth::user()->alias }}"
+                        <input type="text" name="alias" placeholder="Alias" value="{{ Auth::user()->alias }}"
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
                         @error('alias')
                         <p class="text-red-700 text-sm italic">{{ $message }}</p>

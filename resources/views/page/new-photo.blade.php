@@ -1,3 +1,9 @@
+<?php
+$googleOAuth = Auth::user()->googleDriveOauth()->latest()->first();
+$hasGoogleAccess = $googleOAuth && !$googleOAuth->expires_at->isPast();
+$oldTags = old('tags', []);
+?>
+
 @extends('layout.main', ['navLogo' => true])
 
 @section('content')
@@ -6,20 +12,113 @@
 
         <h1 class="text-2xl mb-10">New Photograph</h1>
 
+        <!-- Google Drive Authorization -->
         <div class="flex flex-row items-center justify-start">
             <a href="/" id="link-google-drive"
                class="inline-flex flex-col items-center justify-center py-4 px-8 bg-white border border-gray-600 rounded hover:border-gray-800 focus:bg-gray-200">
+                <img class="w-48 h-auto mb-2" src="{{ asset('img/services/google-drive.svg') }}" alt="Google Drive™" title="Google Drive™"/>
                 <span class="text-sm">Click to re-authorize</span>
-                <img class="w-48 h-auto mt-2" src="{{ asset('img/services/google-drive.svg') }}" alt="Google Drive™" title="Google Drive™"/>
             </a>
-            <span id="googledrive-auth-success" class="hidden ml-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm rounded">
+            <span id="googledrive-auth-success" class="{{ $hasGoogleAccess ? '' : 'hidden' }} ml-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm text-center rounded">
                 Successfully authorized.
             </span>
-            <span id="googledrive-auth-failure" class="hidden ml-5 p-2 bg-red-200 border border-red-900 text-red-900 text-sm rounded">
+            <span id="googledrive-auth-failure" class="{{ $hasGoogleAccess ? 'hidden' : '' }} ml-5 p-2 bg-red-200 border border-red-900 text-red-900 text-sm text-center rounded">
                 Authorization failed.
             </span>
         </div>
 
+        <!-- New Photo Form -->
+        <form method="POST" action="{{ route('photograph.create') }}"
+              class="flex flex-row flex-wrap justify-start items-start mt-10">
+            @csrf
+
+            <!-- Left Column -->
+            <div class="w-full md:w-1/2 md:pr-5">
+
+                <!-- Identifier -->
+                <div class="mb-4">
+                    <label class="block text-gray-900 text-sm font-bold mb-2" for="guid">
+                        Identifier
+                    </label>
+                    <input type="text" name="guid" placeholder="Identifier" value="{{ old('guid', Str::uuid()) }}"
+                           readonly
+                           class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 cursor-not-allowed opacity-50 leading-tight focus:outline-none focus:shadow-outline bg-white duration-200 ease-in-out">
+                    @error('guid')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Photo Name -->
+                <div class="mb-4">
+                    <label class="block text-gray-900 text-sm font-bold mb-2" for="name">
+                        Photo Name
+                    </label>
+                    <input type="text" name="name" placeholder="Photo Name" value="{{ old('name') }}"
+                           class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                    @error('name')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Location -->
+                <div class="mb-4">
+                    <label class="block text-gray-900 text-sm font-bold mb-2" for="location">
+                        Location
+                    </label>
+                    <input type="text" name="location" placeholder="Location" value="{{ old('location') }}"
+                           class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                    @error('location')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Save Button -->
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                    Save Button
+                </button>
+
+            </div>
+
+            <!-- Right Column -->
+            <div class="w-full md:w-1/2 md:pl-5 mt-10 md:mt-0">
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label class="block text-gray-900 text-sm font-bold mb-2" for="description">
+                        Description
+                    </label>
+                    <textarea name="description" placeholder="Description" value="{{ old('description') }}"
+                              class="appearance-none border border-gray-600 rounded w-full h-24 py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out"></textarea>
+                    @error('description')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Tags -->
+                <div class="mb-4">
+                    <label class="block text-gray-900 text-sm font-bold mb-1" for="tags-input">Tags (<span id="tags-count">0</span>)</label>
+
+                    <div id="tag-input-container"></div>
+                    <div id="tag-display-container" class="flex flex-wrap flex-row items-start justify-start"></div>
+
+                    <input id="tags-input" type="text" placeholder="Tags&#8230; (press enter to add)"
+                           class="appearance-none border border-gray-600 rounded w-full mt-1 py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                    @error('tags')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+                </div>
+
+            </div>
+        </form>
     </div>
+
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+            @foreach($oldTags as $oldTag)
+            window.addNewPhotoTag('{!! $oldTag !!}');
+            @endforeach
+        });
+    </script>
 
 @endsection

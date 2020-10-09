@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\GoogleDriveOauth;
 use Auth;
+use BadMethodCallException;
 use Carbon\Carbon;
+use Exception;
 use Google_Client;
 use Illuminate\Http\Request;
 
@@ -32,7 +34,11 @@ class GoogleDriveOAuthController extends Controller
         // Check if this user has a previous access token
         $oauth = Auth::user()->googleDriveOauth()->latest()->first();
         if ($oauth) {
-            $google->setAccessToken(json_decode($oauth->token, true));
+            try {
+                $google->setAccessToken(json_decode($oauth->token, true));
+            } catch (Exception $e) {
+                $oauth = null;
+            }
         }
 
         // Check if the access token has expired (or is not set)
@@ -80,32 +86,44 @@ class GoogleDriveOAuthController extends Controller
      */
     public function handleOAuthResponse(Request $request)
     {
-        // Make sure a code has been returned from Google
-        $data = $this->validate($request, [
-            'code' => 'required|string',
-            'scope' => 'required|string',
-        ]);
+        try {
+            // Make sure a code has been returned from Google
+            $data = $this->validate($request, [
+                'code' => 'required|string',
+                'scope' => 'required|string',
+            ]);
 
-        // Grab the Google Drive instance
-        $google = app()->make(Google_Client::class);
+            // Grab the Google Drive instance
+            $google = app()->make(Google_Client::class);
 
-        // Create a new access token using the code provided by Google
-        $token = $google->fetchAccessTokenWithAuthCode($data['code']);
+            // Create a new access token using the code provided by Google
+            $token = $google->fetchAccessTokenWithAuthCode($data['code']);
 
-        // Save the OAuth information to the DB
-        $oauth = new GoogleDriveOauth;
-        $oauth->user()->associate(Auth::user());
-        $oauth->refresh = false;
-        $oauth->auth_code = $data['code'];
-        $oauth->access_token = $token['access_token'];
-        $oauth->refresh_token = $token['refresh_token'];
-        $oauth->scope = $token['scope'];
-        $oauth->token_type = $token['token_type'];
-        $oauth->expires_at = Carbon::parse($token['created'])->addSeconds($token['expires_in']);
-        $oauth->token = json_encode($token);
-        $oauth->saveOrFail();
+            // Check if the token is valid
+            if ($google->isAccessTokenExpired()) {
+                throw new BadMethodCallException('The access token response was invalid.');
+            }
 
-        // Return the successful OAuth token
-        return view('popup.googledrive', compact('oauth'));
+            // Save the OAuth information to the DB
+            $oauth = new GoogleDriveOauth;
+            $oauth->user()->associate(Auth::user());
+            $oauth->refresh = false;
+            $oauth->auth_code = $data['code'];
+            $oauth->access_token = $token['access_token'];
+            $oauth->refresh_token = $token['refresh_token'];
+            $oauth->scope = $token['scope'];
+            $oauth->token_type = $token['token_type'];
+            $oauth->expires_at = Carbon::parse($token['created'])->addSeconds($token['expires_in']);
+            $oauth->token = json_encode($token);
+            $oauth->saveOrFail();
+
+            // Return the successful OAuth token
+            return view('popup.googledrive', compact('oauth'));
+
+        } catch (Exception $e) {
+
+            // An error was encountered
+            return view('popup.googledrive', ['oauth' => null]);
+        }
     }
 }
