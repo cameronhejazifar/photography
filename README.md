@@ -30,6 +30,18 @@ client_max_body_size 256M;
 client_max_body_size 256M;
 ```
 
+#### Google Drive API Key
+
+In the [Google API Console](https://console.developers.google.com/apis/dashboard), you'll need to setup an OAuth consent screen and a Credential.
+
+The Client ID Credential that you setup needs to be scoped for `Google_Service_Drive::DRIVE` (`https://www.googleapis.com/auth/drive`).
+
+Once you've created the credential / access token, save them and add them to the .env:
+```ini
+GOOGLEDRIVE_CLIENT_ID=<your-client-id>
+GOOGLEDRIVE_CLIENT_SECRET=<your-client-secret>
+```
+
 ---
 
 

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\GoogleDrive;
+use App\Models\GoogleDriveOauth;
 use App\Models\Photograph;
 use App\Models\PhotographEdit;
 use Auth;
+use DB;
+use Google_Service_Drive;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Image;
@@ -85,14 +89,30 @@ class PhotographController extends Controller
      */
     public function uploadEdit(Request $request, Photograph $photo)
     {
+        DB::beginTransaction();
+
         try {
             $data = $this->validate($request, [
-                'image' => 'required|image|max:131072',
+                'image' => 'required|image|mimes:jpeg|max:131072',
             ]);
 
-            // TODO: copy original (unscaled) image to Google Drive
+            // Upload image to Google Drive
+            $google = new GoogleDrive;
+            if (!$google->isAuthed()) {
+                throw ValidationException::withMessages([
+                    'google_drive' => 'Invalid Google Drive Session',
+                ]);
+            }
+            $googleDir = $google->mkdirs('Test Folder/Test Subfolder'); // TODO: make this folder location dynamic
+            $photo->google_drive_file_id = $google->upload(
+                $googleDir,
+                "{$photo->guid}.jpg",
+                'image/jpeg',
+                $data['image']->getPathname()
+            );
+            $photo->saveOrFail();
 
-            // Create the large image
+            // Create the large scaled image
             $largeImage = Image::make($data['image']);
             $largeImage->resize(1536, 1536, function (Constraint $constraint) {
                 $constraint->aspectRatio();
@@ -139,10 +159,14 @@ class PhotographController extends Controller
             $thumbImage = null;
             gc_collect_cycles();
 
+            // Commit the changes
+            DB::commit();
+
             // Return the response
             return response()->make(json_encode(compact('large', 'thumb')), 201);
 
         } catch (ValidationException $e) {
+            DB::rollBack();
             $message = 'Form Errors:';
             foreach ($e->validator->getMessageBag()->getMessages() as $field => $error) {
                 $errorMessage = implode(', ', $error);
@@ -151,7 +175,42 @@ class PhotographController extends Controller
             return response()->make($message, 422);
 
         } catch (Throwable $e) {
+            DB::rollBack();
             return response()->make("Error: {$e->getMessage()}", 419);
+        }
+    }
+
+    /**
+     * Downloads the edited (full-size) photo from Google Drive.
+     *
+     * @param Photograph $photo
+     * @return
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws ValidationException
+     */
+    public function downloadPhotoEdit(Photograph $photo)
+    {
+            $google = new GoogleDrive;
+            if (!$google->isAuthed()) {
+                throw ValidationException::withMessages([
+                    'google_drive' => 'Invalid Google Drive Session',
+                ]);
+            }
+            if (strlen($photo->google_drive_file_id) <= 0) {
+                throw ValidationException::withMessages([
+                    'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
+                ]);
+            }
+
+        try {
+            return response()->make($google->download($photo->google_drive_file_id), 200, [
+                'Content-type' => 'image/jpeg',
+                'Content-Disposition' => 'attachment; filename="' . $photo->name . '.jpg"',
+            ]);
+        } catch (Throwable $e) {
+            throw ValidationException::withMessages([
+                'google_drive' => 'Unable to download file from Google Drive',
+            ]);
         }
     }
 }

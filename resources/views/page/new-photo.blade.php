@@ -1,6 +1,4 @@
 <?php
-$googleOAuth = Auth::user()->googleDriveOauth()->latest()->first();
-$hasGoogleAccess = $googleOAuth && !$googleOAuth->expires_at->isPast();
 $oldTags = old('tags', []);
 ?>
 
@@ -11,21 +9,6 @@ $oldTags = old('tags', []);
     <div class="bg-white bg-opacity-75 backdrop-blur-10 rounded-lg shadow-md w-full my-10 p-10">
 
         <h1 class="text-2xl mb-10">New Photograph</h1>
-
-        <!-- Google Drive Authorization -->
-        <div class="flex flex-row items-center justify-start">
-            <a href="/" id="link-google-drive"
-               class="inline-flex flex-col items-center justify-center py-4 px-8 bg-white border border-gray-600 rounded hover:border-gray-800 focus:bg-gray-200">
-                <img class="w-48 h-auto mb-2" src="{{ asset('img/services/google-drive.svg') }}" alt="Google Drive™" title="Google Drive™"/>
-                <span class="text-sm">Click to re-authorize</span>
-            </a>
-            <span id="googledrive-auth-success" class="{{ $hasGoogleAccess ? '' : 'hidden' }} ml-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm text-center rounded">
-                Successfully authorized.
-            </span>
-            <span id="googledrive-auth-failure" class="{{ $hasGoogleAccess ? 'hidden' : '' }} ml-5 p-2 bg-red-200 border border-red-900 text-red-900 text-sm text-center rounded">
-                Authorization failed.
-            </span>
-        </div>
 
         <!-- New Photo Form -->
         <form method="POST" action="{{ route('photograph.create') }}"

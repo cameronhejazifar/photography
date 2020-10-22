@@ -16,14 +16,15 @@ class GoogleDriveServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Google_Client', function ($app) {
+        // Google Drive Client
+        $this->app->singleton('Google_Client', function () {
 
             $clientID = config('services.googledrive.client_id');
             $clientSecret = config('services.googledrive.client_secret');
 
             $client = new Google_Client;
             $client->setApplicationName(config('app.name'));
-            $client->setScopes(Google_Service_Drive::DRIVE_FILE);
+            $client->setScopes(Google_Service_Drive::DRIVE);
             $client->setClientId($clientID);
             $client->setClientSecret($clientSecret);
             $client->setRedirectUri(route('googledrive.redirect'));

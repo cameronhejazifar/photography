@@ -35,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $status
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereStatus($value)
+ * @property string|null $google_drive_file_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereGoogleDriveFileId($value)
  */
 class Photograph extends Model
 {

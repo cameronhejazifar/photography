@@ -41,6 +41,7 @@ Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographFo
 Route::post('/photograph', [PhotographController::class, 'create'])->name('photograph.create');
 Route::get('/photograph/{photo}', [PhotographController::class, 'showManagePhotographForm'])->middleware('is-owner:photo')->name('photograph.manage');
 Route::post('/photograph/{photo}/upload-edit', [PhotographController::class, 'uploadEdit'])->middleware('is-owner:photo')->name('photograph.upload-edit');
+Route::get('/photograph/{photo}/download', [PhotographController::class, 'downloadPhotoEdit'])->middleware('is-owner:photo')->name('photograph.download');
 
 // Google Drive
 Route::get('/googledrive/oauth', [GoogleDriveOAuthController::class, 'tryOAuth'])->name('googledrive');

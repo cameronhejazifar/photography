@@ -3,7 +3,8 @@ $googleOAuth = Auth::user()->googleDriveOauth()->latest()->first();
 $hasGoogleAccess = $googleOAuth && !$googleOAuth->expires_at->isPast();
 $tags = old('tags', json_decode($photo->tags, true));
 $hasEditedPhoto = $photo->photographEdits()->count() > 0;
-$editedPhotoURL = $hasEditedPhoto ? $photo->photographEdits('thumb')->first()->imageURL() : '';
+$editedPhoto = $hasEditedPhoto ? $photo->photographEdits('thumb')->first() : null;
+$editedPhotoURL = $hasEditedPhoto ? $editedPhoto->imageURL() : '';
 ?>
 
 @extends('layout.main', ['navLogo' => true])
@@ -141,24 +142,56 @@ $editedPhotoURL = $hasEditedPhoto ? $photo->photographEdits('thumb')->first()->i
                     <label class="block text-gray-900 text-sm font-bold mb-1" for="tags-input">Edited Image</label>
 
                     <!-- Preview -->
-                    <img id="edited-photo" alt="Photo Edit" src="{{ $editedPhotoURL }}"
-                         class="{{ $hasEditedPhoto ? 'block' : 'hidden' }} w-100 h-auto object-contain object-center"/>
+                    @if($hasEditedPhoto)
+                        <img id="edited-photo" alt="Photo Edit" src="{{ $editedPhotoURL }}"
+                             class="block w-100 h-auto object-contain object-center"/>
+                    @endif
 
-                    <!-- Upload Form -->
-                    <div class="{{ $hasEditedPhoto ? 'hidden' : '' }}">
-                        <form id="my-awesome-dropzone" class="dropzone"
-                              action="{{ route('photograph.upload-edit', $photo->id) }}">
-                            @csrf
-                            <input type="file" name="image"/>
-                        </form>
+                    <!-- Google Drive Authorization -->
+                    <div class="mt-5 flex flex-row items-center justify-start">
+                        <a href="/" id="link-google-drive"
+                           class="inline-flex flex-col items-center justify-center py-4 px-8 bg-white border border-gray-600 rounded hover:border-gray-800 focus:bg-gray-200">
+                            <img class="w-48 h-auto mb-2" src="{{ asset('img/services/google-drive.svg') }}"
+                                 alt="Google Drive™" title="Google Drive™"/>
+                            <span class="text-sm">Click to re-authorize</span>
+                        </a>
+                        <span id="googledrive-auth-success"
+                              class="{{ $hasGoogleAccess ? '' : 'hidden' }} ml-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm text-center rounded">
+                            Successfully authorized.
+                        </span>
+                        <span id="googledrive-auth-failure"
+                              class="{{ $hasGoogleAccess ? 'hidden' : '' }} ml-5 p-2 bg-red-200 border border-red-900 text-red-900 text-sm text-center rounded">
+                            Authorization failed.
+                        </span>
                     </div>
 
                     <!-- Download Button -->
-                    <!-- TODO: implement this -->
-                    <button type="submit"
-                            class="{{ $hasEditedPhoto ? '' : 'hidden' }} mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
-                        Download Full Res.
-                    </button>
+                    @if($hasEditedPhoto)
+                        <!-- TODO: implement this -->
+                        <div id="download-edit-container" class="mt-4">
+                            <a id="download-edit" href="{{ route('photograph.download', $photo->id) }}"
+                               class="{{ $hasGoogleAccess ? '' : 'disabled cursor-not-allowed' }} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                                Download Full Res.
+                            </a>
+                            @error('google_drive')
+                            <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                            @enderror
+                            @error('google_drive_file_id')
+                            <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    @endif
+
+                    @if(!$hasEditedPhoto)
+                        <!-- Upload Form -->
+                        <div id="upload-edit-container" class="mt-4 {{ $hasGoogleAccess ? '' : 'hidden' }}">
+                            <form id="upload-edit" class="dropzone"
+                                  action="{{ route('photograph.upload-edit', $photo->id) }}">
+                                @csrf
+                                <input type="file" name="image"/>
+                            </form>
+                        </div>
+                    @endif
                 </div>
 
             </div>

@@ -51,6 +51,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Photograph[] $photographs
  * @property-read int|null $photographs_count
  * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographEdit[] $photographEdits
+ * @property-read int|null $photograph_edits_count
  */
 class User extends Authenticatable
 {

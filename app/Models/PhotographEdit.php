@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereScaledSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereUserId($value)
+ * @property-read \App\Models\Photograph $photograph
+ * @property-read \App\Models\User $user
  */
 class PhotographEdit extends ImageModel
 {
