@@ -200,6 +200,18 @@ body::-webkit-scrollbar-thumb:hover {
     display: none;
 }
 
+.dropzone .dz-spinner {
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+}
+
+.dropzone.dz-started .dz-spinner {
+    display: block;
+}
+
 /*
  * ===========================================================
  * ====================== End Dropzone =======================

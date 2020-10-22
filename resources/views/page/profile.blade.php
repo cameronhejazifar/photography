@@ -49,7 +49,7 @@
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="email">
                             Email
                         </label>
-                        <input type="email" name="email" placeholder="Email" value="{{ Auth::user()->email }}"
+                        <input type="email" name="email" placeholder="Email" value="{{ old('email', Auth::user()->email) }}"
                                readonly
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 cursor-not-allowed opacity-50 leading-tight focus:outline-none focus:shadow-outline bg-white duration-200 ease-in-out">
                         @error('email')
@@ -62,7 +62,7 @@
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="name">
                             Full Name
                         </label>
-                        <input type="text" name="name" placeholder="Name" value="{{ Auth::user()->name }}"
+                        <input type="text" name="name" placeholder="Name" value="{{ old('name', Auth::user()->name) }}"
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
                         @error('name')
                         <p class="text-red-700 text-sm italic">{{ $message }}</p>
@@ -74,7 +74,7 @@
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="alias">
                             Alias (Display Name)
                         </label>
-                        <input type="text" name="alias" placeholder="Alias" value="{{ Auth::user()->alias }}"
+                        <input type="text" name="alias" placeholder="Alias" value="{{ old('alias', Auth::user()->alias) }}"
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
                         @error('alias')
                         <p class="text-red-700 text-sm italic">{{ $message }}</p>
@@ -89,7 +89,7 @@
                         <input type="date" name="date_of_birth" placeholder="YYYY-MM-DD"
                                min="{{ \Carbon\Carbon::now()->subYears(120)->format('Y-m-d') }}"
                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                               value="{{Auth::user()->date_of_birth->format('Y-m-d') }}"
+                               value="{{ old('date_of_birth', Auth::user()->date_of_birth->format('Y-m-d')) }}"
                                class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
                         @error('date_of_birth')
                         <p class="text-red-700 text-sm italic">{{ $message }}</p>
@@ -236,15 +236,70 @@
 
         <span class="block w-11/12 h-px mt-10 mx-auto bg-gray-700"></span>
 
-        <h1 class="text-2xl my-10">Linked Services</h1>
+        <h1 class="text-2xl my-10">Services</h1>
 
         <!-- Bottom Section -->
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
             <div class="w-full md:w-1/2 md:pr-10">
-                <!-- TODO: add services here -->
-                Placeholder for services, ie: Google Drive, Nixplay, FineArtsAmerica, etc.
+
+                <!-- Google Drive -->
+                <form method="POST" action="{{ route('profile.update-googledrive') }}">
+                    @csrf
+
+                    <h3 class="text-lg mb-3">Google Drive</h3>
+
+                    <!-- Edited Photos Directory -->
+                    <div class="mb-4">
+                        <label class="block text-gray-900 text-sm font-bold mb-2" for="gd-edited-photos">
+                            Edited Photos Directory
+                        </label>
+                        <input type="text" name="google_drive_dir_edits" id="gd-edited-photos"
+                               placeholder="Path for JPEG files, ie: /Photography/Edits"
+                               value="{{ old('google_drive_dir_edits', Auth::user()->google_drive_dir_edits) }}"
+                               class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        @error('google_drive_dir_edits')
+                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Raw Files Directory -->
+                    <div class="mb-4">
+                        <label class="block text-gray-900 text-sm font-bold mb-2" for="gd-raw">
+                            Raw Files Directory
+                        </label>
+                        <input type="text" name="google_drive_dir_raws" id="gd-raw"
+                               placeholder="Path for RAW files, ie: /Photography/Raw"
+                               value="{{ old('google_drive_dir_raws', Auth::user()->google_drive_dir_raws) }}"
+                               class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        @error('google_drive_dir_raws')
+                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Metadata Directory -->
+                    <div class="mb-4">
+                        <label class="block text-gray-900 text-sm font-bold mb-2" for="gd-meta">
+                            Metadata Directory
+                        </label>
+                        <input type="text" name="google_drive_dir_metas" id="gd-meta"
+                               placeholder="Path for XMP files, ie: /Photography/Lightroom"
+                               value="{{ old('google_drive_dir_metas', Auth::user()->google_drive_dir_metas) }}"
+                               class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        @error('google_drive_dir_metas')
+                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Save Google Drive Button -->
+                    <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                        Save
+                    </button>
+
+                </form>
+
             </div>
         </div>
 

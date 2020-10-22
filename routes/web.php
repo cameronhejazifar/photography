@@ -35,6 +35,7 @@ Route::post('/profile', [ProfileController::class, 'update'])->name('profile');
 Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 Route::post('/profile/icon', [ProfileController::class, 'uploadProfileIcon'])->name('profile.upload-icon');
 Route::post('/profile/picture', [ProfileController::class, 'uploadProfilePicture'])->name('profile.upload-picture');
+Route::post('/profile/googledrive', [ProfileController::class, 'updateGoogleDrive'])->name('profile.update-googledrive');
 
 // Photo Management
 Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');

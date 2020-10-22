@@ -95,6 +95,11 @@ class PhotographController extends Controller
             $data = $this->validate($request, [
                 'image' => 'required|image|mimes:jpeg|max:131072',
             ]);
+            if (strlen(Auth::user()->google_drive_dir_edits) <= 0) {
+                throw ValidationException::withMessages([
+                    'google_drive' => 'You must set the "Edited Photos Directory" on the "Profile" page before uploading edits.',
+                ]);
+            }
 
             // Upload image to Google Drive
             $google = new GoogleDrive;
@@ -103,7 +108,7 @@ class PhotographController extends Controller
                     'google_drive' => 'Invalid Google Drive Session',
                 ]);
             }
-            $googleDir = $google->mkdirs('Test Folder/Test Subfolder'); // TODO: make this folder location dynamic
+            $googleDir = $google->mkdirs(Auth::user()->google_drive_dir_edits);
             $photo->google_drive_file_id = $google->upload(
                 $googleDir,
                 "{$photo->guid}.jpg",
@@ -111,6 +116,10 @@ class PhotographController extends Controller
                 $data['image']->getPathname()
             );
             $photo->saveOrFail();
+
+            // Release memory
+            $google = null;
+            gc_collect_cycles();
 
             // Create the large scaled image
             $largeImage = Image::make($data['image']);

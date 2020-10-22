@@ -56,7 +56,7 @@ class GoogleDrive
     public function mkdirs($path)
     {
         // Convert the full path to an array
-        $pathComponents = explode('/', $path);
+        $pathComponents = explode('/', trim($path, '/'));
 
         // Start from root
         $parentID = 'root';
@@ -64,7 +64,10 @@ class GoogleDrive
 
         // Recursively iterate through directory structure, creating directories if they don't exist
         while ($index < count($pathComponents)) {
-            $parentID = $this->mkdir($parentID, $pathComponents[$index]);
+            $pathComponents[$index] = trim($pathComponents[$index]);
+            if (strlen($pathComponents[$index]) > 0) {
+                $parentID = $this->mkdir($parentID, $pathComponents[$index]);
+            }
             $index++;
         }
 

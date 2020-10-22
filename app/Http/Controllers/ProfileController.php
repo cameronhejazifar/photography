@@ -61,7 +61,7 @@ class ProfileController extends Controller
         $user->fill($data);
         $user->saveOrFail();
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Profile information successfully saved.');
     }
 
     /**
@@ -162,5 +162,28 @@ class ProfileController extends Controller
 
         // Return the response
         return redirect()->back()->with('status', 'Profile picture successfully updated.');
+    }
+
+    /**
+     * Updates the user's preferences for Google Drive.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Throwable
+     */
+    public function updateGoogleDrive(Request $request)
+    {
+        $data = $this->validate($request, [
+            'google_drive_dir_edits' => 'present|string|between:2,768|nullable',
+            'google_drive_dir_raws' => 'present|string|between:2,768|nullable',
+            'google_drive_dir_metas' => 'present|string|between:2,768|nullable',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+        $user->fill($data);
+        $user->saveOrFail();
+
+        return redirect()->back()->with('status', 'Google Drive settings successfully updated.');
     }
 }

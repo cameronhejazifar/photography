@@ -53,6 +53,12 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographEdit[] $photographEdits
  * @property-read int|null $photograph_edits_count
+ * @property string|null $google_drive_dir_edits
+ * @property string|null $google_drive_dir_raws
+ * @property string|null $google_drive_dir_metas
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirEdits($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirMetas($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirRaws($value)
  */
 class User extends Authenticatable
 {
