@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/dropzone.js', 'public/js')
     .copyDirectory('resources/img', 'public/img')
     .copyDirectory('resources/fonts', 'public/fonts')
     .postCss('resources/css/app.css', 'public/css', [

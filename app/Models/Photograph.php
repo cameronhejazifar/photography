@@ -32,6 +32,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereUpdatedAt($value)
  * @property int $user_id
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereUserId($value)
+ * @property string $status
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereStatus($value)
  */
 class Photograph extends Model
 {
@@ -52,5 +55,20 @@ class Photograph extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Returns all photograph edits that belong to the user.
+     *
+     * @param null $scaledSize
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographEdits($scaledSize = null)
+    {
+        $query = $this->hasMany(PhotographEdit::class);
+        if ($scaledSize) {
+            $query = $query->where('scaled_size', $scaledSize);
+        }
+        return $query;
     }
 }

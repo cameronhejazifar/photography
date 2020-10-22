@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Image;
 use Intervention\Image\Constraint;
-use Storage;
 use Str;
 
 class ProfileController extends Controller

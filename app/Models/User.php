@@ -35,8 +35,8 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Carbon|null $date_of_birth
  * @property string|null $biography
  * @property string|null $photograph_checklist
- * @property int $active
- * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
+ * @property string $status
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAlias($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereBiography($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
@@ -47,6 +47,10 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $profile_pictures_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GoogleDriveOauth[] $googleDriveOauth
  * @property-read int|null $google_drive_oauth_count
+ * @property int $active
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Photograph[] $photographs
+ * @property-read int|null $photographs_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
  */
 class User extends Authenticatable
 {
@@ -117,6 +121,16 @@ class User extends Authenticatable
     public function photographs()
     {
         return $this->hasMany(Photograph::class);
+    }
+
+    /**
+     * Returns all photograph edits that belong to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographEdits()
+    {
+        return $this->hasMany(PhotographEdit::class);
     }
 
     public function profileIconURL()

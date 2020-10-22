@@ -26,7 +26,7 @@
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
-            <div class="w-full md:w-1/2 md:pr-10 border-r border-gray-700">
+            <div class="w-full md:w-1/2 md:pr-10 md:border-r border-gray-700">
 
                 <!-- Profile Info Form -->
                 <form method="POST" action="{{ route('profile') }}">
