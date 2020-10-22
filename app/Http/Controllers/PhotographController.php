@@ -147,7 +147,7 @@ class PhotographController extends Controller
 
             // Create the thumbnail image
             $thumbImage = Image::make($data['image']);
-            $thumbImage->resize(768, 768, function (Constraint $constraint) {
+            $thumbImage->resize(512, 512, function (Constraint $constraint) {
                 $constraint->aspectRatio();
             });
 
