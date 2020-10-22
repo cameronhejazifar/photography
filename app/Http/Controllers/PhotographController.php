@@ -79,6 +79,32 @@ class PhotographController extends Controller
     }
 
     /**
+     * Updates an existing photograph record.
+     *
+     * @param Request $request
+     * @param Photograph $photo
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    public function update(Request $request, Photograph $photo)
+    {
+        $data = $this->validate($request, [
+            'status' => 'required|in:active,inactive',
+            'name' => 'required|string|between:1,255',
+            'location' => 'required|string|between:1,255',
+            'description' => 'required|string|between:1,2000',
+            'tags' => 'required|array|between:1,30',
+            'tags.*' => 'required|string|between:1,65',
+        ]);
+
+        $photo->fill($data);
+        $photo->saveOrFail();
+
+        return redirect()->back()->with('status', 'Photograph successfully saved.');
+    }
+
+    /**
      * Uploads a photograph edit (the actual edited photo).
      *
      * @param Request $request

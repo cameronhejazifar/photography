@@ -14,9 +14,23 @@ $editedPhotoURL = $hasEditedPhoto ? $editedPhoto->imageURL() : '';
     <div class="bg-white bg-opacity-75 backdrop-blur-10 rounded-lg shadow-md w-full my-10 p-10">
 
         <!-- Header -->
-        <div class="flex flex-row flex-no-wrap items-center justify-start mb-10">
+        <div class="flex flex-row flex-no-wrap items-center justify-between mb-10">
 
             <h1 class="text-2xl">Manage Photo: <span class="font-bold font-mono">{{ $photo->guid }}</span></h1>
+
+            @if($photo->status === 'active')
+            <button type="button" id="unpublish-button"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                Un-Publish
+            </button>
+            @endif
+
+            @if($photo->status === 'inactive')
+            <button type="button" id="publish-button"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                Publish
+            </button>
+            @endif
 
         </div>
 
@@ -27,7 +41,7 @@ $editedPhotoURL = $hasEditedPhoto ? $editedPhoto->imageURL() : '';
             <div class="w-full md:w-1/2 md:pr-10 md:border-r border-gray-700">
 
                 <!-- Profile Info Form -->
-                <form method="POST" action="{{ route('profile') }}">
+                <form id="profile-info-form" method="POST" action="{{ route('photograph.update', $photo->id) }}">
                     @csrf
 
                     <!-- Identifier -->

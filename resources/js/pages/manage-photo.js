@@ -2,6 +2,20 @@ Dropzone.autoDiscover = false;
 
 $(document).ready(() => {
 
+    // Publish Button
+    $('#publish-button').on('click', (e) => {
+        e.preventDefault();
+        $('#profile-info-form [name=status]').val('active');
+        $('#profile-info-form').submit();
+    });
+
+    // Unpublish Button
+    $('#unpublish-button').on('click', (e) => {
+        e.preventDefault();
+        $('#profile-info-form [name=status]').val('inactive');
+        $('#profile-info-form').submit();
+    });
+
     // Google Drive Button
     $('#link-google-drive').on('click', (e) => {
         e.preventDefault();
