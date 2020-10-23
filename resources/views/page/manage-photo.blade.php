@@ -17,7 +17,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
         <!-- Header -->
         <div class="flex flex-row flex-no-wrap items-center justify-between mb-10">
 
-            <h1 class="text-2xl">Manage Photo: <span class="font-bold font-mono">{{ $photo->guid }}</span></h1>
+            <h1 class="text-2xl">Manage Photo</span></h1>
 
             <div>
                 @if($photo->status === 'active')
@@ -47,7 +47,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
-            <div class="w-full md:w-1/2 md:pr-10">
+            <div class="w-full md:w-1/2 md:pr-10 md:border-r border-gray-700">
 
                 <!-- Profile Info Form -->
                 <form id="profile-info-form" method="POST" action="{{ route('photograph.update', $photo->id) }}">
@@ -158,7 +158,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
             </div>
 
             <!-- Right Column -->
-            <div class="w-full md:w-1/2 md:pl-5 mt-10 md:mt-0 md:border-l border-gray-700">
+            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
 
                 <span class="block md:hidden w-11/12 h-px mb-10 mx-auto bg-gray-700"></span>
 
@@ -221,8 +221,16 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                         </div>
                     @endif
                 </div>
+            </div>
+        </div>
 
-                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+        <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+        <!-- Bottom Section -->
+        <div class="flex flex-row flex-wrap justify-start items-start">
+
+            <!-- Left Column -->
+            <div class="w-full md:w-1/2 md:pr-10 md:border-r border-gray-700">
 
                 <!-- Raw Files -->
                 @if($otherFiles->count() > 0)
@@ -432,6 +440,18 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                     </div>
                 </div>
 
+            </div>
+
+            <!-- Right Column -->
+            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
+
+                <!-- Social / Monetization -->
+                <!-- TODO: set prices here?? or should that just reside in redbubble/fineartamerica? -->
+                <!-- TODO: flickr -->
+                <!-- TODO: instagram -->
+                <!-- TODO: web (publish / unpublish button) -->
+                <!-- TODO: redbubble -->
+                <!-- TODO: fineartamerica -->
             </div>
         </div>
 

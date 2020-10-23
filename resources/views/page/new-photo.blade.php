@@ -16,7 +16,7 @@ $oldTags = old('tags', []);
             @csrf
 
             <!-- Left Column -->
-            <div class="w-full md:w-1/2 md:pr-5">
+            <div class="w-full md:w-1/2 md:pr-10">
 
                 <!-- Identifier -->
                 <div class="mb-4">
@@ -93,7 +93,7 @@ $oldTags = old('tags', []);
             </div>
 
             <!-- Right Column -->
-            <div class="w-full md:w-1/2 md:pl-5 mt-10 md:mt-0">
+            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
 
                 <!-- Description -->
                 <div class="mb-4">

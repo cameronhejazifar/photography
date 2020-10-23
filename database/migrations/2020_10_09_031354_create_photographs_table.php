@@ -20,7 +20,7 @@ class CreatePhotographsTable extends Migration
             $table->string('location');
             $table->text('description');
             $table->text('tags');
-            $table->string('status');
+            $table->string('status')->index();
             $table->timestamps();
         });
     }

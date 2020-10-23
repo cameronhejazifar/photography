@@ -73,7 +73,7 @@ class GoogleDriveOAuthController extends Controller
         }
 
         // If we made it to here, everything is ok! and we can return the successful oauth token
-        return view('popup.googledrive', compact('oauth'));
+        return view('popup.googledrive-oauth', compact('oauth'));
     }
 
     /**
@@ -118,12 +118,12 @@ class GoogleDriveOAuthController extends Controller
             $oauth->saveOrFail();
 
             // Return the successful OAuth token
-            return view('popup.googledrive', compact('oauth'));
+            return view('popup.googledrive-oauth', compact('oauth'));
 
         } catch (Exception $e) {
 
             // An error was encountered
-            return view('popup.googledrive', ['oauth' => null]);
+            return view('popup.googledrive-oauth', ['oauth' => null]);
         }
     }
 }
