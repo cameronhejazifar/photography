@@ -219,73 +219,6 @@ class PhotographController extends Controller
     }
 
     /**
-     * Downloads the edited (full-size) photo from Google Drive.
-     *
-     * @param Photograph $photo
-     * @return
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws ValidationException
-     */
-    public function downloadPhotoEdit(Photograph $photo)
-    {
-        $google = new GoogleDrive;
-        if (!$google->isAuthed()) {
-            throw ValidationException::withMessages([
-                'google_drive' => 'Invalid Google Drive Session',
-            ]);
-        }
-        if (strlen($photo->google_drive_file_id) <= 0) {
-            throw ValidationException::withMessages([
-                'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
-            ]);
-        }
-
-        try {
-            return response()->make($google->download($photo->google_drive_file_id), 200, [
-                'Content-type' => 'image/jpeg',
-                'Content-Disposition' => 'attachment; filename="' . $photo->name . '.jpg"',
-            ]);
-        } catch (Throwable $e) {
-            throw ValidationException::withMessages([
-                'google_drive' => 'Unable to download file from Google Drive',
-            ]);
-        }
-    }
-
-    /**
-     * Downloads a Metadata or RAW file from Google Drive.
-     *
-     * @param Photograph $photo
-     * @param PhotographOtherFile $file
-     * @return \Illuminate\Http\Response
-     * @throws ValidationException
-     */
-    public function downloadPhotoOtherFile(PhotographOtherFile $file) {
-        $google = new GoogleDrive;
-        if (!$google->isAuthed()) {
-            throw ValidationException::withMessages([
-                'google_drive' => 'Invalid Google Drive Session',
-            ]);
-        }
-        if (strlen($file->google_drive_file_id) <= 0) {
-            throw ValidationException::withMessages([
-                'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
-            ]);
-        }
-
-        try {
-            return response()->make($google->download($file->google_drive_file_id), 200, [
-                'Content-type' => 'application/octet-stream',
-                'Content-Disposition' => 'attachment; filename="' . $file->filename . '"',
-            ]);
-        } catch (Throwable $e) {
-            throw ValidationException::withMessages([
-                'google_drive' => 'Unable to download file from Google Drive',
-            ]);
-        }
-    }
-
-    /**
      * Uploads a photograph file attachment (RAW, XMP, etc).
      *
      * @param Request $request
@@ -392,5 +325,105 @@ class PhotographController extends Controller
         } catch (Throwable $e) {
             return response()->make("Error: {$e->getMessage()}", 419);
         }
+    }
+
+    /**
+     * Downloads a file from Google Drive and outputs it in the response
+     *
+     * @param $googleFileID
+     * @param $filename
+     * @return \Illuminate\Http\Response
+     * @throws ValidationException
+     */
+    private function downloadGoogleDriveFile($fileID, $filename)
+    {
+        $google = new GoogleDrive;
+        if (!$google->isAuthed()) {
+            throw ValidationException::withMessages([
+                'google_drive' => 'Invalid Google Drive Session',
+            ]);
+        }
+        if (strlen($fileID) <= 0) {
+            throw ValidationException::withMessages([
+                'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
+            ]);
+        }
+
+        try {
+            return response()->make($google->download($fileID), 200, [
+                'Content-type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]);
+        } catch (Throwable $e) {
+            throw ValidationException::withMessages([
+                'google_drive' => 'Unable to download file from Google Drive',
+            ]);
+        }
+    }
+
+    /**
+     * Downloads the edited (full-size) photo from Google Drive.
+     *
+     * @param Photograph $photo
+     * @return
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws ValidationException
+     */
+    public function downloadPhotoEdit(Photograph $photo)
+    {
+        return $this->downloadGoogleDriveFile($photo->google_drive_file_id, "{$photo->name}.jpg");
+    }
+
+    /**
+     * Downloads a Metadata or RAW file from Google Drive.
+     *
+     * @param Photograph $photo
+     * @param PhotographOtherFile $file
+     * @return \Illuminate\Http\Response
+     * @throws ValidationException
+     */
+    public function downloadPhotoOtherFile(PhotographOtherFile $file)
+    {
+        return $this->downloadGoogleDriveFile($file->google_drive_file_id, $file->filename);
+    }
+
+    /**
+     * Updates the meta information on an attached file.
+     *
+     * @param Request $request
+     * @param PhotographOtherFile $file
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    public function updateOther(Request $request, PhotographOtherFile $file)
+    {
+        $data = $this->validate($request, [
+            'camera' => 'present|string|between:1,255|nullable',
+            'lens' => 'present|string|between:1,255|nullable',
+            'filter' => 'present|string|between:1,255|nullable',
+            'focal_length' => 'present|string|between:1,255|nullable',
+            'exposure_time' => 'present|string|between:1,255|nullable',
+            'aperture' => 'present|string|between:1,255|nullable',
+            'iso' => 'present|string|between:1,255|nullable',
+        ]);
+
+        $file->fill($data);
+        $file->saveOrFail();
+
+        return redirect()->back()->with('status', 'File successfully saved.');
+    }
+
+    /**
+     * Deletes an additional file.
+     *
+     * @param PhotographOtherFile $file
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
+     */
+    public function deleteOther(PhotographOtherFile $file)
+    {
+        $file->delete();
+        return redirect()->back()->with('status', 'File successfully deleted.');
     }
 }

@@ -37,6 +37,12 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
 
         </div>
 
+        @if (session('status'))
+            <p class="mb-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm rounded">
+                {{ session('status') }}
+            </p>
+        @endif
+
         <!-- Top Section -->
         <div class="flex flex-row flex-wrap justify-start items-start">
 
@@ -226,7 +232,9 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                         </label>
 
                         @foreach($otherFiles as $otherFile)
-                            <div class="flex flex-col justify-center items-center border border-gray-600 rounded p-2 mb-5">
+                            <form method="POST" action="{{ route('photograph.update-other', $otherFile->id) }}"
+                                  class="flex flex-col justify-center items-center border border-gray-600 rounded p-2 mb-5">
+                                @csrf
 
                                 <div class="flex flex-row flex-wrap justify-center items-center w-full">
 
@@ -356,25 +364,24 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                                         @enderror
                                     </div>
 
-                                    <!-- Save Button -->
                                     <div class="text-xs text-gray-700 w-full md:w-1/2 md:pl-1 text-right">
                                         <label class="block text-gray-700 text-xs">&nbsp;</label>
                                         <div class="flex flex-row flex-no-wrap items-center justify-end">
-                                            <!-- TODO: submit exif changes -->
+                                            <!-- Save Button -->
                                             <button type="submit"
                                                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
                                                 Save Exif Info
                                             </button>
-                                            <!-- TODO: add a delete button to remove file -->
-                                            <button type="submit"
+                                            <!-- Delete Button -->
+                                            <a href="{{ route('photograph.delete-other', $otherFile->id) }}"
                                                     class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 ml-1 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
                                                 Delete File
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
 
-                            </div>
+                            </form>
                         @endforeach
                     </div>
                 @endif

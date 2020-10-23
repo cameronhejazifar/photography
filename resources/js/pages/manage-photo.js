@@ -19,7 +19,7 @@ $(document).ready(() => {
     // Google Drive Button
     $('#link-google-drive').on('click', (e) => {
         e.preventDefault();
-        openPopupWindow('/googledrive/oauth', 'Google Drive', 250, 300);
+        openPopupWindow('/googledrive/oauth', 'Google Drive', 500, 600);
     });
 
     // Upload Photo Edit
@@ -67,7 +67,7 @@ function openPopupWindow(url, title, w, h) {
     const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
     const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
-    const systemZoom = width / window.screen.availWidth;
+    const systemZoom = 1; // const systemZoom = width / window.screen.availWidth;
     const left = (width - w) / 2 / systemZoom + dualScreenLeft;
     const top = (height - h) / 2 / systemZoom + dualScreenTop;
     const newWindow = window.open(url, title, `
