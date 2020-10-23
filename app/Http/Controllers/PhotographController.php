@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ExifData;
 use App\Classes\GoogleDrive;
-use App\Models\GoogleDriveOauth;
 use App\Models\Photograph;
 use App\Models\PhotographEdit;
+use App\Models\PhotographOtherFile;
 use Auth;
 use DB;
-use Google_Service_Drive;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Image;
 use Intervention\Image\Constraint;
+use Str;
 use Throwable;
+use Validator;
 
 class PhotographController extends Controller
 {
@@ -225,17 +228,17 @@ class PhotographController extends Controller
      */
     public function downloadPhotoEdit(Photograph $photo)
     {
-            $google = new GoogleDrive;
-            if (!$google->isAuthed()) {
-                throw ValidationException::withMessages([
-                    'google_drive' => 'Invalid Google Drive Session',
-                ]);
-            }
-            if (strlen($photo->google_drive_file_id) <= 0) {
-                throw ValidationException::withMessages([
-                    'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
-                ]);
-            }
+        $google = new GoogleDrive;
+        if (!$google->isAuthed()) {
+            throw ValidationException::withMessages([
+                'google_drive' => 'Invalid Google Drive Session',
+            ]);
+        }
+        if (strlen($photo->google_drive_file_id) <= 0) {
+            throw ValidationException::withMessages([
+                'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
+            ]);
+        }
 
         try {
             return response()->make($google->download($photo->google_drive_file_id), 200, [
@@ -246,6 +249,148 @@ class PhotographController extends Controller
             throw ValidationException::withMessages([
                 'google_drive' => 'Unable to download file from Google Drive',
             ]);
+        }
+    }
+
+    /**
+     * Downloads a Metadata or RAW file from Google Drive.
+     *
+     * @param Photograph $photo
+     * @param PhotographOtherFile $file
+     * @return \Illuminate\Http\Response
+     * @throws ValidationException
+     */
+    public function downloadPhotoOtherFile(PhotographOtherFile $file) {
+        $google = new GoogleDrive;
+        if (!$google->isAuthed()) {
+            throw ValidationException::withMessages([
+                'google_drive' => 'Invalid Google Drive Session',
+            ]);
+        }
+        if (strlen($file->google_drive_file_id) <= 0) {
+            throw ValidationException::withMessages([
+                'google_drive_file_id' => 'The file has not been uploaded to Google Drive yet.',
+            ]);
+        }
+
+        try {
+            return response()->make($google->download($file->google_drive_file_id), 200, [
+                'Content-type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename="' . $file->filename . '"',
+            ]);
+        } catch (Throwable $e) {
+            throw ValidationException::withMessages([
+                'google_drive' => 'Unable to download file from Google Drive',
+            ]);
+        }
+    }
+
+    /**
+     * Uploads a photograph file attachment (RAW, XMP, etc).
+     *
+     * @param Request $request
+     * @param Photograph $photo
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     * @throws ValidationException
+     * @throws Exception
+     */
+    public function uploadOther(Request $request, Photograph $photo)
+    {
+        try {
+            // Validation
+            $data = $this->validate($request, [
+                'other_type' => 'required|in:raw,meta',
+                'file' => 'required|file|max:262144',
+            ]);
+
+            // Specific file type validation
+            switch ($data['other_type']) {
+                case 'raw':
+                    $googleDriveDir = Auth::user()->google_drive_dir_raws;
+                    $googleDriveDirDesc = 'Raw Files Directory';
+                    $allowedMimeTypes = '3fr,ari,arw,bay,bmp,braw,crw,cr2,cr3,cap,data,dcs,dcr,dng,drf,eip,erf,fff,gpr,iiq,jpeg,k25,kdc,mdc,mef,mos,mrw,nef,nrw,obm,orf,pef,png,ptx,pxn,r3d,raf,raw,rwl,rw2,rwz,sr2,srf,srw,tif,tiff,x3f';
+                    break;
+                case 'meta':
+                    $googleDriveDir = Auth::user()->google_drive_dir_metas;
+                    $googleDriveDirDesc = 'Metadata Directory';
+                    $allowedMimeTypes = 'xmp,txt';
+                    break;
+                default:
+                    throw new Exception('Unhandled file type: ' . $data['other_type']);
+            }
+            Validator::validate($data, [
+                'file' => "mimes:{$allowedMimeTypes}",
+            ]);
+
+            // Check if the Google Drive dir has been initialized
+            if (strlen($googleDriveDir) <= 0) {
+                throw ValidationException::withMessages([
+                    'google_drive' => 'You must set the "' . $googleDriveDirDesc . '" on the "Profile" page before uploading edits.',
+                ]);
+            }
+
+            // Create the extension and filename
+            $guid = Str::uuid();
+            $extension = null;
+            if (strpos($data['file']->getClientOriginalName(), '.') >= 0) {
+                $filenameParts = explode('.', $data['file']->getClientOriginalName());
+                $extension = end($filenameParts);
+            }
+            if (strlen($extension) <= 0) {
+                $extension = 'xmp';
+            }
+            $filename = "{$guid}.{$extension}";
+
+            // Upload image to Google Drive
+            $google = new GoogleDrive;
+            if (!$google->isAuthed()) {
+                throw ValidationException::withMessages([
+                    'google_drive' => 'Invalid Google Drive Session',
+                ]);
+            }
+            $destinationDir = join(DIRECTORY_SEPARATOR, [trim($googleDriveDir, '/'), $photo->guid]);
+            $googleDir = $google->mkdirs($destinationDir);
+            $googleFileID = $google->upload(
+                $googleDir,
+                $filename,
+                $data['file']->getMimeType(),
+                $data['file']->getPathname()
+            );
+
+            // Create the database record
+            $file = new PhotographOtherFile;
+            $file->other_type = $data['other_type'];
+            $file->filename = $filename;
+            $file->filetype = $extension;
+            $file->google_drive_file_id = $googleFileID;
+            $file->user()->associate(Auth::user());
+            $file->photograph()->associate($photo);
+
+            // Read the exif data (metadata)
+            $exif = ExifData::read($data['file']->getPathname());
+            $file->camera = $exif->camera();
+            $file->lens = null;
+            $file->filter = null;
+            $file->focal_length = $exif->focalLength();
+            $file->exposure_time = $exif->exposureTime();
+            $file->aperture = $exif->aperture();
+            $file->iso = $exif->iso();
+
+            // Save the record
+            $file->saveOrFail();
+
+            return response()->json($file, 200);
+
+        } catch (ValidationException $e) {
+            $message = 'Form Errors:';
+            foreach ($e->validator->getMessageBag()->getMessages() as $field => $error) {
+                $errorMessage = implode(', ', $error);
+                $message .= " {$field} - {$errorMessage}";
+            }
+            return response()->make($message, 422);
+
+        } catch (Throwable $e) {
+            return response()->make("Error: {$e->getMessage()}", 419);
         }
     }
 }

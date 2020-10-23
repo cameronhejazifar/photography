@@ -60,9 +60,9 @@ class Photograph extends Model
     }
 
     /**
-     * Returns all photograph edits that belong to the user.
+     * Returns all photograph edits that belong to the photograph.
      *
-     * @param null $scaledSize
+     * @param string|null $scaledSize
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function photographEdits($scaledSize = null)
@@ -70,6 +70,21 @@ class Photograph extends Model
         $query = $this->hasMany(PhotographEdit::class);
         if ($scaledSize) {
             $query = $query->where('scaled_size', $scaledSize);
+        }
+        return $query;
+    }
+
+    /**
+     * Returns all other photograph files that belong to the photograph.
+     *
+     * @param string|null $otherType
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographOtherFiles($otherType = null)
+    {
+        $query = $this->hasMany(PhotographOtherFile::class);
+        if ($otherType) {
+            $query = $query->where('other_type', $otherType);
         }
         return $query;
     }

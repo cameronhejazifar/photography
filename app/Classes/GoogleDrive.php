@@ -35,11 +35,22 @@ class GoogleDrive
         }
     }
 
+    /**
+     * Whether or not the user is currently authenticated with Google Drive.
+     *
+     * @return bool
+     */
     public function isAuthed()
     {
         return $this->oauth && !$this->oauth->expires_at->isPast();
     }
 
+    /**
+     * Escapes a string for use with a Google Drive API query string.
+     *
+     * @param $q
+     * @return string|string[]
+     */
     private function escape($q)
     {
         $q = str_replace("\\", "\\\\", $q);

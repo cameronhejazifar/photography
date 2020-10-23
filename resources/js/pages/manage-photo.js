@@ -24,21 +24,39 @@ $(document).ready(() => {
 
     // Upload Photo Edit
     if ($('#upload-edit').length > 0) {
-        const photoDropzone = new Dropzone('#upload-edit', {
+        const photoEditDropzone = new Dropzone('#upload-edit', {
             timeout: null,
             maxFilesize: null,
             maxFiles: null,
             dictDefaultMessage: 'Drag & Drop Image (JPG, PNG, etc.)',
             paramName: $('#upload-edit input[type=file]').attr('name'),
         });
-        photoDropzone.on('sending', () => {
-            photoDropzone.removeAllFiles();
+        photoEditDropzone.on('sending', () => {
+            photoEditDropzone.removeAllFiles();
         });
-        photoDropzone.on('success', () => {
+        photoEditDropzone.on('success', () => {
             window.location.reload();
         });
     }
 
+    // Upload Photo Raw
+    const photoRawDropzone = new Dropzone('#upload-raw', {
+        timeout: null,
+        maxFilesize: null,
+        maxFiles: null,
+        dictDefaultMessage: 'Drag & Drop File',
+        paramName: $('#upload-raw input[type=file]').attr('name'),
+    });
+    photoRawDropzone.on('sending', () => {
+        photoRawDropzone.removeAllFiles();
+    });
+    photoRawDropzone.on('success', () => {
+        window.location.reload();
+    });
+
+    $('#upload-raw-type').on('change', () => {
+        $('#upload-raw [name=other_type]').val($('#upload-raw-type').val());
+    });
 });
 
 function openPopupWindow(url, title, w, h) {
