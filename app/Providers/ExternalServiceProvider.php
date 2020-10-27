@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App\Classes\FlickrClient;
 use Google_Client;
 use Google_Service_Drive;
 use Illuminate\Support\ServiceProvider;
 
-class GoogleDriveServiceProvider extends ServiceProvider
+class ExternalServiceProvider extends ServiceProvider
 {
 
     /**
@@ -16,8 +17,20 @@ class GoogleDriveServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // FlickrClient Client
+        $this->app->singleton(FlickrClient::class, function() {
+            $consumerKey = config('services.flickr.consumer_key');
+            $consumerSecretKey = config('services.flickr.consumer_secret_key');
+
+            $client = new FlickrClient;
+            $client->setConsumerKey($consumerKey);
+            $client->setConsumerSecretKey($consumerSecretKey);
+
+            return $client;
+        });
+
         // Google Drive Client
-        $this->app->singleton('Google_Client', function () {
+        $this->app->singleton(Google_Client::class, function () {
 
             $clientID = config('services.googledrive.client_id');
             $clientSecret = config('services.googledrive.client_secret');

@@ -59,7 +59,7 @@ class GoogleDriveOauth extends Model
     ];
 
     /**
-     * Get the User this icon belongs to.
+     * Get the User this oauth belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

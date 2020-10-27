@@ -42,6 +42,14 @@ GOOGLEDRIVE_CLIENT_ID=<your-client-id>
 GOOGLEDRIVE_CLIENT_SECRET=<your-client-secret>
 ```
 
+#### Flickr API Key
+
+You'll also need to create [Flickr API Keys](https://www.flickr.com/services/api/keys/). Once you've created your keys, set them in the .env:
+```ini
+FLICKR_CONSUMER_KEY=<your-api-key>
+FLICKR_CONSUMER_SECRET_KEY=<your-api-secret>
+```
+
 ---
 
 

@@ -35,4 +35,9 @@ return [
         'client_secret' => env('GOOGLEDRIVE_CLIENT_SECRET'),
     ],
 
+    'flickr' => [
+        'consumer_key' => env('FLICKR_CONSUMER_KEY'),
+        'consumer_secret_key' => env('FLICKR_CONSUMER_SECRET_KEY'),
+    ],
+
 ];

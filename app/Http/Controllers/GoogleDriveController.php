@@ -10,7 +10,7 @@ use Exception;
 use Google_Client;
 use Illuminate\Http\Request;
 
-class GoogleDriveOAuthController extends Controller
+class GoogleDriveController extends Controller
 {
     /**
      * Create a new controller instance.

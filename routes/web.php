@@ -14,7 +14,8 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrowseController;
-use App\Http\Controllers\GoogleDriveOAuthController;
+use App\Http\Controllers\FlickrController;
+use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PhotographController;
 use App\Http\Controllers\ProfileController;
@@ -49,7 +50,10 @@ Route::get('/photograph/download-other/{file}', [PhotographController::class, 'd
 Route::post('/photograph/update-other/{file}', [PhotographController::class, 'updateOther'])->middleware('is-owner:file')->name('photograph.update-other');
 Route::get('/photograph/delete-other/{file}', [PhotographController::class, 'deleteOther'])->middleware('is-owner:file')->name('photograph.delete-other');
 
-
 // Google Drive
-Route::get('/googledrive/oauth', [GoogleDriveOAuthController::class, 'tryOAuth'])->name('googledrive');
-Route::get('/googledrive/oauth/redirect', [GoogleDriveOAuthController::class, 'handleOAuthResponse'])->name('googledrive.redirect');
+Route::get('/googledrive/oauth', [GoogleDriveController::class, 'tryOAuth'])->name('googledrive');
+Route::get('/googledrive/oauth/redirect', [GoogleDriveController::class, 'handleOAuthResponse'])->name('googledrive.redirect');
+
+// Flickr
+Route::get('/flickr/authenticate', [FlickrController::class, 'authenticate'])->name('flickr');
+Route::get('/flickr/authenticate/callback', [FlickrController::class, 'oauthCallback'])->name('flickr.oauth-callback');

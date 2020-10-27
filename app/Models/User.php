@@ -59,6 +59,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirEdits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirMetas($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirRaws($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrOauth[] $flickrOauth
+ * @property-read int|null $flickr_oauth_count
  */
 class User extends Authenticatable
 {
@@ -119,6 +121,16 @@ class User extends Authenticatable
     public function googleDriveOauth()
     {
         return $this->hasMany(GoogleDriveOauth::class);
+    }
+
+    /**
+     * Returns all google drive OAuth records.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flickrOauth()
+    {
+        return $this->hasMany(FlickrOauth::class);
     }
 
     /**
