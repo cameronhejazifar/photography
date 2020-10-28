@@ -44,4 +44,8 @@ return [
         'consumer_secret_key' => env('FLICKR_CONSUMER_SECRET_KEY'),
     ],
 
+    'nixplay' => [
+        'album_url' => env('NIXPLAY_ALBUM_URL'),
+    ],
+
 ];

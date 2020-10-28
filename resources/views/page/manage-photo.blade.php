@@ -496,11 +496,25 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
 
                 <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
 
+                <!-- Nixplay -->
+                @if(config('services.nixplay.album_url', null) !== null)
+                    <div class="block">
+                        <h3 class="text-lg mb-3">Nixplay</h3>
+
+                        <a href="{{ config('services.nixplay.album_url') }}" target="_blank"
+                           class="inline-flex flex-no-wrap flex-row items-center text-orange-700 hover:text-orange-900 underline text-sm outline-none focus:shadow-outline">
+                            <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
+                            View Nixplay Album
+                        </a>
+                    </div>
+                @endif
+
+                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
                 <!-- TODO: set prices here?? or should that just reside in redbubble/fineartamerica? -->
                 <!-- TODO: instagram -->
                 <!-- TODO: fineartamerica -->
                 <!-- TODO: redbubble -->
-                <!-- TODO: nixplay -->
             </div>
         </div>
 
