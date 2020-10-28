@@ -439,41 +439,8 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
 
                 <!-- Social / Monetization -->
 
-                <!-- Flickr -->
-                @if($hasEditedPhoto)
-                    <h3 class="text-lg mb-3">Flickr</h3>
-                    <div class="flex flex-no-wrap flex-row items-center justify-start">
-                        <a id="post-to-flickr"
-                           href="{{ route('flickr.oauth', ['next_url' => route('flickr.post', $photo->id)]) }}"
-                           class="inline-flex flex-row justify-center items-center bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
-                            <img class="w-5 h-5 mr-2" src="{{ asset('img/footer/flickr.png') }}" alt="Flickr"/>
-                            <span>Post to Flickr</span>
-                        </a>
-                        <div class="ml-4">
-                            @if($hasFlickrOAuth)
-                                <a href="https://www.flickr.com/photos/{{ $flickrOAuth->flickr_nsid }}" target="_blank"
-                                   class="my-2 inline-flex flex-no-wrap flex-row items-center text-pink-600 hover:text-pink-800 underline text-sm outline-none focus:shadow-outline">
-                                    <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
-                                    View Flickr Photostream
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <span id="flickr-post-success"
-                              class="{{ $photo->flickrPosts()->count() > 0 ? '' : 'hidden' }} p-2 bg-green-200 border border-green-900 text-green-900 text-sm text-center rounded">
-                            Successfully posted to Flickr.
-                        </span>
-                        <span id="flickr-post-failure"
-                              class="hidden p-2 bg-red-200 border border-red-900 text-red-900 text-sm text-center rounded">
-                            Post to Flickr failed.
-                        </span>
-                    </div>
-                @endif
-
-                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
-
-                <div class="block mt-8">
+                <!-- This Website -->
+                <div class="block">
                     <h3 class="text-lg mb-3">{{ config('app.name', 'Laravel') }} Photography</h3>
 
                     @if($photo->status === 'active')
@@ -490,6 +457,42 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                         </button>
                     @endif
                 </div>
+
+                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+                <!-- Flickr -->
+                @if($hasEditedPhoto)
+                    <div class="block">
+                        <h3 class="text-lg mb-3">Flickr</h3>
+                        <div class="flex flex-no-wrap flex-row items-center justify-start">
+                            <a id="post-to-flickr"
+                               href="{{ route('flickr.oauth', ['next_url' => route('flickr.post', $photo->id)]) }}"
+                               class="inline-flex flex-row justify-center items-center bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                                <img class="w-5 h-5 mr-2" src="{{ asset('img/footer/flickr.png') }}" alt="Flickr"/>
+                                <span>Post to Flickr</span>
+                            </a>
+                            <div class="ml-4">
+                                @if($hasFlickrOAuth)
+                                    <a href="https://www.flickr.com/photos/{{ $flickrOAuth->flickr_nsid }}" target="_blank"
+                                       class="my-2 inline-flex flex-no-wrap flex-row items-center text-pink-600 hover:text-pink-800 underline text-sm outline-none focus:shadow-outline">
+                                        <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
+                                        View Flickr Photostream
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span id="flickr-post-success"
+                                  class="{{ $photo->flickrPosts()->count() > 0 ? '' : 'hidden' }} p-2 bg-green-200 border border-green-900 text-green-900 text-sm text-center rounded">
+                                Successfully posted to Flickr.
+                            </span>
+                            <span id="flickr-post-failure"
+                                  class="hidden p-2 bg-red-200 border border-red-900 text-red-900 text-sm text-center rounded">
+                                Post to Flickr failed.
+                            </span>
+                        </div>
+                    </div>
+                @endif
 
                 <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
 
