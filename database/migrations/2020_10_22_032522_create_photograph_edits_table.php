@@ -16,7 +16,7 @@ class CreatePhotographEditsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('photograph_id')->index();
-            $table->enum('scaled_size', ['large', 'thumb']);
+            $table->enum('scaled_size', ['large', 'medium', 'thumb']);
             $table->string('disk');
             $table->string('directory');
             $table->string('filename');

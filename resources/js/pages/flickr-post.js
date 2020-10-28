@@ -10,6 +10,7 @@ $(document).ready(() => {
         e.preventDefault();
         formError.text('');
         formSubmit.prop('disabled', true);
+        formSubmit.find('.animate-spin').removeClass('hidden');
 
         $.ajax({
             url: submitURL,
@@ -30,6 +31,7 @@ $(document).ready(() => {
             },
             complete() {
                 formSubmit.prop('disabled', false);
+                formSubmit.find('.animate-spin').addClass('hidden');
             },
             error(xhr, status, error) {
                 if (parseInt(xhr.status) === 422) {

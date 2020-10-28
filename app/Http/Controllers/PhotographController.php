@@ -174,6 +174,30 @@ class PhotographController extends Controller
             $largeImage = null;
             gc_collect_cycles();
 
+            // Create the medium scaled image
+            $mediumImage = Image::make($data['image']);
+            $mediumImage->resize(1024, 1024, function (Constraint $constraint) {
+                $constraint->aspectRatio();
+            });
+            $mediumImage->insert(resource_path('img/watermarks/medium.png'), 'bottom-right', 40, 40);
+
+            // Save medium image to storage
+            $medium = new PhotographEdit;
+            $medium->scaled_size = 'medium';
+            $medium->disk = 'public';
+            $medium->directory = 'edits-medium';
+            $medium->filename = $photo->guid . '.jpg';
+            $medium->filetype = 'jpg';
+            $medium->user()->associate(Auth::user());
+            $medium->photograph()->associate($photo);
+            $medium->storeImage($mediumImage);
+            $medium->saveOrFail();
+            $medium->url = $medium->imageURL();
+
+            // Release memory
+            $mediumImage = null;
+            gc_collect_cycles();
+
             // Create the thumbnail image
             $thumbImage = Image::make($data['image']);
             $thumbImage->resize(512, 512, function (Constraint $constraint) {
@@ -201,7 +225,7 @@ class PhotographController extends Controller
             DB::commit();
 
             // Return the response
-            return response()->make(json_encode(compact('large', 'thumb')), 201);
+            return response()->make(json_encode(compact('large', 'medium', 'thumb')), 201);
 
         } catch (ValidationException $e) {
             DB::rollBack();

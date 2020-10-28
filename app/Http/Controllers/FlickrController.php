@@ -180,13 +180,15 @@ class FlickrController extends Controller
         $post = new FlickrPost($data);
         $post->user()->associate(Auth::user());
         $post->photograph()->associate($photo);
-        $post->image_path = $photo->photographEdits('large')->latest()->first()->getImagePath();
+        $post->image_path = $photo->photographEdits('medium')->latest()->first()->getImagePath();
         $post->tags = $tags;
         $response = $flickr->submitPost($oauth, $post);
         if ($response === null) {
             abort(419, 'Unable to submit post to Flickr.');
         }
         $post->saveOrFail();
+
+        // TODO: do we need to create Flickr "Albums" and post to them (using the PhotoCollections that are attached to the photograph)?
 
         // Return the created post
         return response()->json($post, 201);
