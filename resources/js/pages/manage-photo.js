@@ -63,7 +63,12 @@ $(document).ready(() => {
     $('#post-to-flickr').on('click', (e) => {
         e.preventDefault();
         openPopupWindow($('#post-to-flickr').attr('href'), 'Flickr', 700, 990);
-    })
+    });
+
+    $('#generate-instagram-post').on('click', (e) => {
+        e.preventDefault();
+        openPopupWindow($('#generate-instagram-post').attr('href'), 'Instagram', 500, 700);
+    });
 });
 
 function openPopupWindow(url, title, w, h) {

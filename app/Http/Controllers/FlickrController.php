@@ -135,7 +135,7 @@ class FlickrController extends Controller
      */
     public function showPostForm(Photograph $photo)
     {
-        return view('page.flickr-post', compact('photo'));
+        return view('popup.flickr-post', compact('photo'));
     }
 
     /**

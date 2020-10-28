@@ -17,6 +17,7 @@ use App\Http\Controllers\BrowseController;
 use App\Http\Controllers\FlickrController;
 use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\PhotographController;
 use App\Http\Controllers\ProfileController;
 
@@ -59,3 +60,6 @@ Route::get('/flickr/authenticate', [FlickrController::class, 'authenticate'])->n
 Route::get('/flickr/authenticate/callback', [FlickrController::class, 'oauthCallback'])->name('flickr.oauth-callback');
 Route::get('/flickr/post/{photo}', [FlickrController::class, 'showPostForm'])->middleware('is-owner:photo')->name('flickr.post');
 Route::post('/flickr/post/{photo}', [FlickrController::class, 'submitPost'])->middleware('is-owner:photo')->name('flickr.post.submit');
+
+// Instagram
+Route::get('/instagram/post/{photo}', [InstagramController::class, 'generatePost'])->middleware('is-owner:photo')->name('instagram.post');

@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="w-full max-w-screen-xl flex flex-col items-center justify-center">
+<div class="w-full flex flex-col items-center justify-start flex-grow">
     @yield('content')
 </div>
 

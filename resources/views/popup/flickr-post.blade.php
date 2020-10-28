@@ -12,6 +12,7 @@ $editedPhotoURL = $hasEditedPhoto ? $editedPhoto->imageURL() : '';
           class="w-full p-10">
         @csrf
 
+        <!-- Image -->
         <img alt="Photo" src="{{ $editedPhotoURL }}"
              class="block w-75 h-auto object-contain object-center mb-8"/>
 

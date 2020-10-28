@@ -100,4 +100,45 @@ class Photograph extends Model
     {
         return $this->hasMany(FlickrPost::class);
     }
+
+    /**
+     * Generates text that is formatted to be posted to Instagram.
+     */
+    public function generateInstagramText()
+    {
+        $text = trim($this->description) . PHP_EOL . '.' . PHP_EOL . '.' . PHP_EOL;
+        $files = $this->photographOtherFiles()->whereNotNull('camera')->orderBy('created_at')->get();
+        for ($i = 0; $i < $files->count(); $i++) {
+            /** @var PhotographOtherFile $file */
+            $file = $files->get($i);
+            if ($i > 0) {
+                $text .= '.' . PHP_EOL;
+            }
+            if (count($files) > 1) {
+                $text .= 'Photograph ' . ($i + 1) . ':' . PHP_EOL;
+            }
+            $text .= $file->camera;
+            $text .= ' — ' . $file->lens;
+            $text .= PHP_EOL;
+            $text .= $file->focal_length;
+            if (strlen($file->filter) > 0) {
+                $text .= ' ' . $file->filter;
+            }
+            $text .= ', T:' . $file->exposure_time;
+            $text .= ', A:' . $file->aperture;
+            $text .= ', ISO:' . $file->iso;
+            $text .= PHP_EOL;
+        }
+        $tags = json_decode($this->tags, true);
+        if (is_array($tags) && count($tags) > 0) {
+            $text .= '.' . PHP_EOL . '.' . PHP_EOL;
+            for ($i = 0; $i < count($tags); $i++) {
+                if ($i > 0) {
+                    $text .= ' ';
+                }
+                $text .= '#' . trim(ltrim($tags[$i], '#'));
+            }
+        }
+        return $text;
+    }
 }
