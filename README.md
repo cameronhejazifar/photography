@@ -30,7 +30,16 @@ client_max_body_size 256M;
 client_max_body_size 256M;
 ```
 
-#### Google Drive API Key
+#### Google API Key (Maps, etc.)
+
+You'll need a Google API Key if you plan to use any of the Google Cloud Platform (GCP) services, such as geolocation, etc.
+
+In the [Google Cloud Platform](https://console.cloud.google.com/projectselector2/home/dashboard), select (or create) your project, then go to APIs, and then Credentials. Add an API Key here and then go to the Library tab. From here, find the Geocoding API and enable it for your API Key. Then set the API Key in the .env:
+```ini
+GOOGLECLOUDPLATFORM_API_KEY=<your-api-key>
+```
+
+#### Google Drive OAuth Client Keys
 
 In the [Google API Console](https://console.developers.google.com/apis/dashboard), you'll need to setup an OAuth consent screen and a Credential.
 

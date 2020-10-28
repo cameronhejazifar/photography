@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Classes\FlickrClient;
+use App\Classes\GoogleCloudPlatform;
 use Google_Client;
 use Google_Service_Drive;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +26,16 @@ class ExternalServiceProvider extends ServiceProvider
             $client = new FlickrClient;
             $client->setConsumerKey($consumerKey);
             $client->setConsumerSecretKey($consumerSecretKey);
+
+            return $client;
+        });
+
+        // GoogleCloudPlatform Client
+        $this->app->singleton(GoogleCloudPlatform::class, function() {
+            $apiKey = config('services.googlecloudplatform.api_key');
+
+            $client = new GoogleCloudPlatform;
+            $client->setApiKey($apiKey);
 
             return $client;
         });

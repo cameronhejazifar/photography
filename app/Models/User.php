@@ -61,6 +61,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleDriveDirRaws($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrOauth[] $flickrOauth
  * @property-read int|null $flickr_oauth_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrPost[] $flickrPosts
+ * @property-read int|null $flickr_posts_count
  */
 class User extends Authenticatable
 {
@@ -141,6 +143,16 @@ class User extends Authenticatable
     public function photographs()
     {
         return $this->hasMany(Photograph::class);
+    }
+
+    /**
+     * Returns all Flickr Posts that belong to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flickrPosts()
+    {
+        return $this->hasMany(FlickrPost::class);
     }
 
     /**

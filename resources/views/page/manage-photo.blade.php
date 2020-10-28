@@ -446,6 +446,27 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
             <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
 
                 <!-- Social / Monetization -->
+
+                <!-- Flickr -->
+                @if($hasEditedPhoto)
+                    <div class="flex flex-no-wrap flex-row items-center justify-start">
+                        <a id="post-to-flickr"
+                           href="{{ route('flickr.oauth', ['next_url' => route('flickr.post', $photo->id)]) }}"
+                           class="inline-flex flex-row justify-center items-center bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                            <img class="w-5 h-5 mr-2" src="{{ asset('img/footer/flickr.png') }}" alt="Flickr"/>
+                            <span>Post to Flickr</span>
+                        </a>
+                        <span id="flickr-post-success"
+                              class="{{ $photo->flickrPosts()->count() > 0 ? '' : 'hidden' }} p-2 ml-5 bg-green-200 border border-green-900 text-green-900 text-sm text-center rounded">
+                            Successfully posted to Flickr.
+                        </span>
+                        <span id="flickr-post-failure"
+                              class="hidden ml-5 p-2 bg-red-200 border border-red-900 text-red-900 text-sm text-center rounded">
+                            Post to Flickr failed.
+                        </span>
+                    </div>
+                @endif
+
                 <!-- TODO: set prices here?? or should that just reside in redbubble/fineartamerica? -->
                 <!-- TODO: flickr -->
                 <!-- TODO: instagram -->

@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereStatus($value)
  * @property string|null $google_drive_file_id
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereGoogleDriveFileId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrPost[] $flickrPosts
+ * @property-read int|null $flickr_posts_count
  */
 class Photograph extends Model
 {
@@ -87,5 +89,15 @@ class Photograph extends Model
             $query = $query->where('other_type', $otherType);
         }
         return $query;
+    }
+
+    /**
+     * Returns all Flickr Posts that belong to the photograph.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flickrPosts()
+    {
+        return $this->hasMany(FlickrPost::class);
     }
 }

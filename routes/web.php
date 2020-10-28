@@ -55,5 +55,7 @@ Route::get('/googledrive/oauth', [GoogleDriveController::class, 'tryOAuth'])->na
 Route::get('/googledrive/oauth/redirect', [GoogleDriveController::class, 'handleOAuthResponse'])->name('googledrive.redirect');
 
 // Flickr
-Route::get('/flickr/authenticate', [FlickrController::class, 'authenticate'])->name('flickr');
+Route::get('/flickr/authenticate', [FlickrController::class, 'authenticate'])->name('flickr.oauth');
 Route::get('/flickr/authenticate/callback', [FlickrController::class, 'oauthCallback'])->name('flickr.oauth-callback');
+Route::get('/flickr/post/{photo}', [FlickrController::class, 'showPostForm'])->middleware('is-owner:photo')->name('flickr.post');
+Route::post('/flickr/post/{photo}', [FlickrController::class, 'submitPost'])->middleware('is-owner:photo')->name('flickr.post.submit');

@@ -40,23 +40,30 @@ $(document).ready(() => {
     }
 
     // Upload Photo Raw
-    const photoRawDropzone = new Dropzone('#upload-raw', {
-        timeout: null,
-        maxFilesize: null,
-        maxFiles: null,
-        dictDefaultMessage: 'Drag & Drop File',
-        paramName: $('#upload-raw input[type=file]').attr('name'),
-    });
-    photoRawDropzone.on('sending', () => {
-        photoRawDropzone.removeAllFiles();
-    });
-    photoRawDropzone.on('success', () => {
-        window.location.reload();
-    });
+    if ($('#upload-raw').length > 0) {
+        const photoRawDropzone = new Dropzone('#upload-raw', {
+            timeout: null,
+            maxFilesize: null,
+            maxFiles: null,
+            dictDefaultMessage: 'Drag & Drop File',
+            paramName: $('#upload-raw input[type=file]').attr('name'),
+        });
+        photoRawDropzone.on('sending', () => {
+            photoRawDropzone.removeAllFiles();
+        });
+        photoRawDropzone.on('success', () => {
+            window.location.reload();
+        });
+    }
 
     $('#upload-raw-type').on('change', () => {
         $('#upload-raw [name=other_type]').val($('#upload-raw-type').val());
     });
+
+    $('#post-to-flickr').on('click', (e) => {
+        e.preventDefault();
+        openPopupWindow($('#post-to-flickr').attr('href'), 'Flickr', 700, 990);
+    })
 });
 
 function openPopupWindow(url, title, w, h) {
@@ -82,7 +89,7 @@ function openPopupWindow(url, title, w, h) {
     }
 }
 
-function closePopupWindow(popupWindow, meta) {
+function onGoogleOauthComplete(popupWindow, meta) {
     popupWindow.close();
     if (meta.success) {
         $('#googledrive-auth-success').removeClass('hidden');
@@ -96,5 +103,16 @@ function closePopupWindow(popupWindow, meta) {
         $('#download-edit').addClass('disabled cursor-not-allowed');
     }
 }
+window.onGoogleOauthComplete = onGoogleOauthComplete;
 
-window.closePopupWindow = closePopupWindow;
+function onFlickrPostComplete(popupWindow, meta) {
+    popupWindow.close();
+    if (meta.success) {
+        $('#flickr-post-success').addClass('hidden');
+        $('#flickr-post-failure').removeClass('hidden');
+    } else {
+        $('#flickr-post-success').removeClass('hidden');
+        $('#flickr-post-failure').addClass('hidden');
+    }
+}
+window.onFlickrPostComplete = onFlickrPostComplete;

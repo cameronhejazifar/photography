@@ -5,6 +5,7 @@ namespace App\Classes;
 
 
 use App\Models\FlickrOauth;
+use App\Models\FlickrPost;
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use Str;
@@ -60,11 +61,11 @@ class FlickrClient
      * @param $method
      * @param $url
      * @param $params
-     * @param null $oauthTokenSecret
+     * @param null|string $accessTokenSecret
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function sendFlickrRequest($method, $url, $params, $oauthTokenSecret = null)
+    private function sendFlickrRequest($method, $url, $params, $accessTokenSecret = null)
     {
         $params['oauth_consumer_key'] = $this->consumerKey;
         $params['oauth_timestamp'] = time();
@@ -84,8 +85,8 @@ class FlickrClient
         }
 
         $signatureKey = $this->consumerSecretKey . '&';
-        if ($oauthTokenSecret) { // TODO: what's this? rename it?
-            $signatureKey .= $oauthTokenSecret;
+        if ($accessTokenSecret) {
+            $signatureKey .= $accessTokenSecret;
         }
         $signature = base64_encode(hash_hmac('sha1', $signatureBase, $signatureKey, true));
 
@@ -210,18 +211,16 @@ class FlickrClient
      * This method will exchange a request token & verifier for an access token that
      * can be used to make api calls to Flickr.
      *
-     * @param string $requestToken
-     * @param string $requestTokenSecret
-     * @param string $requestTokenVerifier
+     * @param FlickrOauth $oauth
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function requestAccessToken($requestToken, $requestTokenSecret, $requestTokenVerifier)
+    public function requestAccessToken($oauth)
     {
         $response = $this->sendFlickrRequest('GET', $this->requestAccessTokenEndpoint, [
-            'oauth_token' => $requestToken,
-            'oauth_verifier' => $requestTokenVerifier,
-        ], $requestTokenSecret);
+            'oauth_token' => $oauth->request_token,
+            'oauth_verifier' => $oauth->request_token_verifier,
+        ], $oauth->request_token_secret);
         if ($response === null) {
             throw new InvalidArgumentException('Unable to get a valid access_token response from Flickr.');
         }
@@ -229,23 +228,83 @@ class FlickrClient
     }
 
     /**
-     * @param $accessToken
-     * @param $accessTokenSecret
+     * @param FlickrOauth $oauth
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function testAccessToken($accessToken, $accessTokenSecret)
+    public function testAccessToken($oauth)
     {
         try {
             $response = $this->sendFlickrRequest('GET', $this->restEndpoint, [
-                'oauth_token' => $accessToken,
+                'oauth_token' => $oauth->access_token,
                 'method' => 'flickr.auth.oauth.checkToken',
                 'api_key' => $this->consumerKey,
-            ], $accessTokenSecret);
+            ], $oauth->access_token_secret);
             if ($response === null) {
                 throw new InvalidArgumentException('Flickr access token appears to be invalid.');
             }
             return $this->parseXmlResponse($response);
+        } catch (Throwable $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param FlickrOauth $oauth
+     * @param FlickrPost $post
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function submitPost($oauth, &$post)
+    {
+        try {
+            // Upload the photo
+            $response = $this->sendFlickrRequest('POST', $this->uploadEndpoint, [
+                'oauth_token' => $oauth->access_token,
+                'photo' => $post->image_path,
+                'title' => $post->title,
+                'description' => $post->description,
+                'tags' => implode(' ', json_decode($post->tags, true)),
+                'is_public' => boolval($post->is_public) ? 1 : 0,
+                'is_friend' => boolval($post->is_friend) ? 1 : 0,
+                'is_family' => boolval($post->is_family) ? 1 : 0,
+                'safety_level' => FlickrPost::SAFETY_LEVEL_SAFE,
+                'content_type' => FlickrPost::CONTENT_TYPE_PHOTO,
+                'hidden' => FlickrPost::SEARCHABLE_GLOBAL,
+            ], $oauth->access_token_secret);
+
+            // Check for errors
+            if ($response === null) {
+                throw new InvalidArgumentException('Flickr access token appears to be invalid.');
+            }
+            $postResponse = $this->parseXmlResponse($response);
+            if (!array_key_exists('@attributes', $postResponse) || $postResponse['@attributes']['stat'] !== 'ok') {
+                throw new InvalidArgumentException('An error was encountered while uploading the image to Flickr.');
+            }
+
+            // Get the photo id from Flickr
+            $post->flickr_photo_id = $postResponse['photoid'];
+
+            // If there is a location, set it
+            if (strlen($post->location) > 0) {
+                $gcp = app()->make(GoogleCloudPlatform::class);
+                list($latitude, $longitude) = $gcp->determineLocation($post->location);
+                if ($latitude !== null && $longitude !== null) {
+                    $this->sendFlickrRequest('POST', $this->restEndpoint, [
+                        'oauth_token' => $oauth->access_token,
+                        'method' => 'flickr.photos.geo.setLocation',
+                        'photo_id' => $post->flickr_photo_id,
+                        'lat' => $latitude,
+                        'lon' => $longitude,
+                        'accuracy' => FlickrPost::LOCATION_ACCURACY_CITY,
+                        'context' => FlickrPost::LOCATION_CONTEXT_OUTDOORS,
+                    ], $oauth->access_token_secret);
+                }
+            }
+
+            // Return the response
+            return $postResponse;
+
         } catch (Throwable $e) {
             return null;
         }

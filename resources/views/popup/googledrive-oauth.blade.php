@@ -3,12 +3,12 @@
 <head>
     <script type="text/javascript">
         @if($oauth)
-        window.opener.closePopupWindow(window, {
+        window.opener.onGoogleOauthComplete(window, {
             success: true,
             oauth: { expires_at: {{ $oauth->expires_at->getPreciseTimestamp(3) }} }
         });
         @else
-        window.opener.closePopupWindow(window, { success: false, oauth: null });
+        window.opener.onGoogleOauthComplete(window, { success: false, oauth: null });
         @endif
     </script>
 </head>

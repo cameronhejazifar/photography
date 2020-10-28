@@ -42,6 +42,34 @@ abstract class ImageModel extends Model
         return $disk->put($path, $image->encode($this->filetype));
     }
 
+    /**
+     * Returns the contents of the image file.
+     *
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function getImage()
+    {
+        $disk = Storage::disk($this->disk);
+        return $disk->get("{$this->directory}/{$this->filename}");
+    }
+
+    /**
+     * Returns the path of the image file.
+     *
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function getImagePath()
+    {
+        return Storage::path("{$this->disk}/{$this->directory}/{$this->filename}");
+    }
+
+    /**
+     * Builds the URL to the image that can be accessed from the web.
+     *
+     * @return string
+     */
     public function imageURL()
     {
         $url = Storage::disk($this->disk)->url("{$this->directory}/{$this->filename}");
