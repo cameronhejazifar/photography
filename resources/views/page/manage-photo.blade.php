@@ -25,19 +25,6 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
             <h1 class="text-2xl">Manage Photo</span></h1>
 
             <div>
-                @if($photo->status === 'active')
-                <button type="button" id="unpublish-button"
-                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
-                    Un-Publish from Site
-                </button>
-                @endif
-
-                @if($photo->status === 'inactive')
-                <button type="button" id="publish-button"
-                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
-                    Publish to Site
-                </button>
-                @endif
             </div>
 
         </div>
@@ -484,8 +471,29 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                     </div>
                 @endif
 
+                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+                <div class="block mt-8">
+                    <h3 class="text-lg mb-3">{{ config('app.name', 'Laravel') }} Photography</h3>
+
+                    @if($photo->status === 'active')
+                        <button type="button" id="unpublish-button"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                            Un-Publish from Site
+                        </button>
+                    @endif
+
+                    @if($photo->status === 'inactive')
+                        <button type="button" id="publish-button"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                            Publish to Site
+                        </button>
+                    @endif
+                </div>
+
+                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
                 <!-- TODO: set prices here?? or should that just reside in redbubble/fineartamerica? -->
-                <!-- TODO: web (publish / unpublish button) -->
                 <!-- TODO: instagram -->
                 <!-- TODO: fineartamerica -->
                 <!-- TODO: redbubble -->
