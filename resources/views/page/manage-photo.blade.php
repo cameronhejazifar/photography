@@ -522,9 +522,8 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                     </div>
 
                     <!-- TODO: set prices here?? or should that just reside in redbubble/fineartamerica? -->
-                    <!-- TODO: instagram (tutorial: https://www.youtube.com/watch?v=dEDKOcPuXlU, sdk: https://developers.facebook.com/docs/instagram-api/overview)-->
-                    <!-- TODO: fineartamerica -->
-                    <!-- TODO: redbubble -->
+                    <!-- TODO: fineartamerica (maybe just do a link that opens a popup window? widgets kinda suck) - widgets ==> https://fineartamerica.com/controlpanel/widgetmanager.html -- Images uploaded at: https://fineartamerica.com/profiles/cameron-hejazi-far -->
+                    <!-- TODO: redbubble - just have a customizable link to Redbubble? no api available -->
 
                 @endif
             </div>

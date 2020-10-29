@@ -62,7 +62,7 @@ $(document).ready(() => {
 
     $('#post-to-flickr').on('click', (e) => {
         e.preventDefault();
-        openPopupWindow($('#post-to-flickr').attr('href'), 'Flickr', 700, 990);
+        openPopupWindow($('#post-to-flickr').attr('href'), 'Flickr', 500, 930);
     });
 
     $('#generate-instagram-post').on('click', (e) => {
