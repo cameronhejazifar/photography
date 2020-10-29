@@ -1,10 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "cameronhejazifar/photography",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Hejazi Photography.",
     "keywords": [
-        "framework",
-        "laravel"
+        "hejazi",
+        "photography"
     ],
     "license": "MIT",
     "require": {
