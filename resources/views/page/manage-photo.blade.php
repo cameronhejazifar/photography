@@ -439,6 +439,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
 
                 <!-- Social / Monetization -->
                 @if($hasEditedPhoto)
+                    <span class="block md:hidden w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
 
                     <!-- This Website -->
                     <div class="block">
@@ -493,14 +494,14 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                         </div>
                     </div>
 
-                    <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
-
                     <!-- Nixplay -->
-                    @if(config('services.nixplay.album_url', null) !== null)
+                    @if(strlen(Auth::user()->nixplay_url) > 0)
+                        <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
                         <div class="block">
                             <h3 class="text-lg mb-3">Nixplay</h3>
 
-                            <a href="{{ config('services.nixplay.album_url') }}" target="_blank"
+                            <a href="{{ Auth::user()->nixplay_url }}" target="_blank"
                                class="inline-flex flex-no-wrap flex-row items-center text-orange-700 hover:text-orange-900 underline text-sm outline-none focus:shadow-outline">
                                 <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
                                 View Nixplay Album
@@ -535,14 +536,14 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                         </form>
                     </div>
 
-                    <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
-
                     <!-- Fine Art America -->
-                    @if(config('services.fineartamerica.profile_url', null) !== null)
+                    @if(strlen(Auth::user()->fineartamerica_url) > 0)
+                        <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
                         <div class="block">
                             <h3 class="text-lg mb-3">Fine Art America</h3>
 
-                            <a href="{{ config('services.fineartamerica.profile_url') }}" target="_blank"
+                            <a href="{{ Auth::user()->fineartamerica_url }}" target="_blank"
                                class="inline-flex flex-no-wrap flex-row items-center text-blue-800 hover:text-blue-900 underline text-sm outline-none focus:shadow-outline">
                                 <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
                                 View Profile Page (Upload Photo)

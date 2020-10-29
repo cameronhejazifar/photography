@@ -301,6 +301,72 @@
                 </form>
 
             </div>
+
+            <!-- Right Column -->
+            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0 md:border-l border-gray-700">
+
+                <span class="block md:hidden w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+                <!-- Nixplay -->
+                <form method="POST" action="{{ route('profile.update-nixplay') }}">
+                    @csrf
+
+                    <h3 class="text-lg mb-3">Nixplay</h3>
+
+                    <!-- Link to Nixplay Album -->
+                    <div class="mb-4">
+                        <label class="block text-gray-900 text-sm font-bold mb-2" for="nixplay-url">
+                            Link to Nixplay
+                        </label>
+                        <input type="url" name="nixplay_url" id="nixplay-url"
+                               placeholder="https://"
+                               value="{{ old('nixplay_url', Auth::user()->nixplay_url) }}"
+                               class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        @error('nixplay_url')
+                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Save Nixplay Button -->
+                    <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                        Save
+                    </button>
+
+                </form>
+
+                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+                <!-- Fine Art America -->
+                <form method="POST" action="{{ route('profile.update-fineartamerica') }}">
+                    @csrf
+
+                    <h3 class="text-lg mb-3">Fine Art America</h3>
+
+                    <!-- Link to Fine Art America Album -->
+                    <div class="mb-4">
+                        <label class="block text-gray-900 text-sm font-bold mb-2" for="fineartamerica-url">
+                            Link to Fine Art America
+                        </label>
+                        <input type="url" name="fineartamerica_url" id="fineartamerica-url"
+                               placeholder="https://"
+                               value="{{ old('fineartamerica_url', Auth::user()->fineartamerica_url) }}"
+                               class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        @error('fineartamerica_url')
+                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Save Fine Art America Button -->
+                    <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                        Save
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
 
     </div>

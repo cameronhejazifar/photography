@@ -186,4 +186,47 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('status', 'Google Drive settings successfully updated.');
     }
+
+    /**
+     * Updates the user's preferences for Nixplay.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Throwable
+     */
+    public function updateNixplay(Request $request)
+    {
+        $data = $this->validate($request, [
+            'nixplay_url' => 'present|url|nullable',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+        $user->fill($data);
+        $user->saveOrFail();
+
+        return redirect()->back()->with('status', 'Nixplay settings successfully updated.');
+    }
+
+    /**
+     * Updates the user's preferences for Fine Art America.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Throwable
+     */
+    public function updateFineArtAmerica(Request $request)
+    {
+        $data = $this->validate($request, [
+            'fineartamerica_url' => 'present|url|nullable',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+        $user->fill($data);
+        $user->saveOrFail();
+
+        return redirect()->back()->with('status', 'Fine Art America settings successfully updated.');
+    }
+
 }

@@ -63,6 +63,10 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $flickr_oauth_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrPost[] $flickrPosts
  * @property-read int|null $flickr_posts_count
+ * @property string|null $nixplay_url
+ * @property string|null $fineartamerica_url
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFineartamericaUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereNixplayUrl($value)
  */
 class User extends Authenticatable
 {

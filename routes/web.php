@@ -38,6 +38,8 @@ Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->
 Route::post('/profile/icon', [ProfileController::class, 'uploadProfileIcon'])->name('profile.upload-icon');
 Route::post('/profile/picture', [ProfileController::class, 'uploadProfilePicture'])->name('profile.upload-picture');
 Route::post('/profile/googledrive', [ProfileController::class, 'updateGoogleDrive'])->name('profile.update-googledrive');
+Route::post('/profile/nixplay', [ProfileController::class, 'updateNixplay'])->name('profile.update-nixplay');
+Route::post('/profile/fineartamerica', [ProfileController::class, 'updateFineArtAmerica'])->name('profile.update-fineartamerica');
 
 // Photo Management
 Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
