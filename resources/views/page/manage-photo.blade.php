@@ -549,7 +549,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                             </a>
                         </div>
                         <label class="block text-gray-900 text-sm font-bold mt-2" for="guid">
-                            Link to Prints
+                            Link to FineArtAmerica Prints
                         </label>
                         <form method="POST" action="{{ route('photograph.update.social-links', $photo->id) }}"
                               class="flex flex-row flex-no-wrap items-center justify-center">
@@ -567,9 +567,29 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                     <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
 
                     <!-- Redbubble -->
+                    <div class="block">
+                        <h3 class="text-lg mb-3">Redbubble</h3>
 
-                    <!-- TODO: fineartamerica (maybe just do a link that opens a popup window? widgets kinda suck) - widgets ==> https://fineartamerica.com/controlpanel/widgetmanager.html -- Images uploaded at: https://fineartamerica.com/profiles/cameron-hejazi-far -->
-                    <!-- TODO: redbubble - just have a customizable link to Redbubble? no api available -->
+                        <a href="https://www.redbubble.com/portfolio/images/new" target="_blank"
+                           class="inline-flex flex-no-wrap flex-row items-center text-blue-800 hover:text-blue-900 underline text-sm outline-none focus:shadow-outline">
+                            <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
+                            Upload Photo
+                        </a>
+                    </div>
+                    <label class="block text-gray-900 text-sm font-bold mt-2" for="guid">
+                        Link to Redbubble Swag
+                    </label>
+                    <form method="POST" action="{{ route('photograph.update.social-links', $photo->id) }}"
+                          class="flex flex-row flex-no-wrap items-center justify-center">
+                        @csrf
+                        <input type="url" name="redbubble_url" placeholder="https://"
+                               value="{{ old('redbubble_url', $photo->redbubble_url) }}"
+                               class="flex-grow mr-2 appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                            Save
+                        </button>
+                    </form>
 
                 @endif
             </div>

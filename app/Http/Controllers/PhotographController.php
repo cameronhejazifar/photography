@@ -465,6 +465,7 @@ class PhotographController extends Controller
         $data = $this->validate($request, [
             'instagram_url' => 'url|max:255|nullable',
             'fineartamerica_url' => 'url|max:255|nullable',
+            'redbubble_url' => 'url|max:255|nullable',
         ]);
 
         // Update the photo
