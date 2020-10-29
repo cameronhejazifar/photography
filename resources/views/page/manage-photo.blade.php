@@ -519,7 +519,23 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                             <img class="w-5 h-5 mr-2" src="{{ asset('img/footer/instagram.png') }}" alt="Instagram"/>
                             <span>Generate Instagram Post</span>
                         </a>
+                        <label class="block text-gray-900 text-sm font-bold mt-2" for="guid">
+                            Instagram Link
+                        </label>
+                        <form method="POST" action="{{ route('photograph.update.social-links', $photo->id) }}"
+                              class="flex flex-row flex-no-wrap items-center justify-center">
+                            @csrf
+                            <input type="url" name="instagram_url" placeholder="https://"
+                                   value="{{ old('instagram_url', $photo->instagram_url) }}"
+                                   class="flex-grow mr-2 appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                            <button type="submit"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                                Save
+                            </button>
+                        </form>
                     </div>
+
+                    <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
 
                     <!-- TODO: set prices here?? or should that just reside in redbubble/fineartamerica? -->
                     <!-- TODO: fineartamerica (maybe just do a link that opens a popup window? widgets kinda suck) - widgets ==> https://fineartamerica.com/controlpanel/widgetmanager.html -- Images uploaded at: https://fineartamerica.com/profiles/cameron-hejazi-far -->

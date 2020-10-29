@@ -450,4 +450,27 @@ class PhotographController extends Controller
         $file->delete();
         return redirect()->back()->with('status', 'File successfully deleted.');
     }
+
+    /**
+     * Updates the links to this photo on linked social platforms.
+     *
+     * @param Request $request
+     * @param Photograph $photo
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Throwable
+     */
+    public function updateSocialLinks(Request $request, Photograph $photo)
+    {
+        // Validation
+        $data = $this->validate($request, [
+            'instagram_url' => 'url|max:255|nullable',
+        ]);
+
+        // Update the photo
+        $photo->fill($data);
+        $photo->saveOrFail();
+
+        // Return to the previous page
+        return redirect()->back()->with('status', 'Social link(s) successfully updated.');
+    }
 }

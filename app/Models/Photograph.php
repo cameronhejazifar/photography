@@ -39,6 +39,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereGoogleDriveFileId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrPost[] $flickrPosts
  * @property-read int|null $flickr_posts_count
+ * @property string|null $instagram_url
+ * @property string|null $fineartamerica_url
+ * @property string|null $redbubble_url
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereFineartamericaUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereInstagramUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereRedbubbleUrl($value)
  */
 class Photograph extends Model
 {
