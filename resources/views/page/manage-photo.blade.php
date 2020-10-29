@@ -1,4 +1,6 @@
 <?php
+$checklists = $photo->photographChecklists;
+
 $googleOAuth = Auth::user()->googleDriveOauth()->latest()->first();
 $hasGoogleAccess = $googleOAuth && !$googleOAuth->expires_at->isPast();
 
@@ -33,6 +35,37 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
             <p class="mb-5 p-2 bg-green-200 border border-green-900 text-green-900 text-sm rounded">
                 {{ session('status') }}
             </p>
+        @endif
+
+        <!-- Checklist Section -->
+        @if($checklists->count() > 0)
+            <div class="flex flex-row flex-wrap justify-start items-start mb-8">
+                <div class="w-full md:w-1/2 md:pr-10">
+
+                    <h3 class="text-lg mb-1">Checklist</h3>
+
+                    <ul class="list-none">
+                        @foreach($checklists as $checklist)
+                            <li class="mt-1">
+                                <label for="checklist-{{ $checklist->id }}"
+                                       class="inline-flex flex-row flex-no-wrap items-center justify-start text-sm text-gray-900 leading-5">
+                                    @csrf
+                                    <input type="checkbox" id="checklist-{{ $checklist->id }}"
+                                           data-method="POST"
+                                           data-action="{{ route('photograph.update-checklist', $checklist->id) }}"
+                                           class="checklist-item mr-1" {{ $checklist->completed ? 'checked' : '' }}>
+                                    <span>{{ $checklist->instruction }}</span>
+                                    <svg class="hidden animate-spin ml-3 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </label>
+                            </li>
+                        @endforeach
+                    </ul>
+
+                </div>
+            </div>
         @endif
 
         <!-- Top Section -->
@@ -222,7 +255,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
-            <div class="w-full md:w-1/2 md:pr-10 md:border-r border-gray-700">
+            <div class="w-full md:w-1/2 md:pr-10">
 
                 <!-- Raw Files -->
                 @if($otherFiles->count() > 0)
@@ -384,9 +417,9 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                             </form>
                         @endforeach
                     </div>
-                @endif
 
-                <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+                    <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+                @endif
 
                 <!-- Upload Raw File -->
                 <div class="mb-4">
@@ -435,7 +468,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
             </div>
 
             <!-- Right Column -->
-            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
+            <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0 md:border-l border-gray-700">
 
                 <!-- Social / Monetization -->
                 @if($hasEditedPhoto)

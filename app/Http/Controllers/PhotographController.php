@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\ExifData;
 use App\Classes\GoogleDrive;
 use App\Models\Photograph;
+use App\Models\PhotographChecklist;
 use App\Models\PhotographEdit;
 use App\Models\PhotographOtherFile;
 use Auth;
@@ -71,14 +72,41 @@ class PhotographController extends Controller
             'tags.*' => 'required|string|between:1,65',
         ]);
 
-        // Create the photo
-        $photo = new Photograph($data);
-        $photo->tags = json_encode($photo->tags);
-        $photo->user()->associate(Auth::user());
-        $photo->saveOrFail();
+        // Wrap everything in a transaction
+        DB::beginTransaction();
 
-        // Return the response
-        return redirect()->intended(route('photograph.manage', ['photo' => $photo->id]));
+        try {
+            // Create the photo
+            $photo = new Photograph($data);
+            $photo->tags = json_encode($photo->tags);
+            $photo->user()->associate(Auth::user());
+            $photo->saveOrFail();
+
+            // Create the checklist
+            $photographChecklist = Auth::user()->photograph_checklist;
+            if (strlen($photographChecklist) > 0) {
+                $checklistRows = explode(PHP_EOL, $photographChecklist);
+                foreach ($checklistRows as $index => $checklistRow) {
+                    $checklist = new PhotographChecklist;
+                    $checklist->sequence_number = ($index + 1);
+                    $checklist->completed = false;
+                    $checklist->instruction = trim($checklistRow);
+                    $checklist->user()->associate(Auth::user());
+                    $checklist->photograph()->associate($photo);
+                    $checklist->saveOrFail();
+                }
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            // Return the response
+            return redirect()->intended(route('photograph.manage', ['photo' => $photo->id]));
+
+        } catch (Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     /**
@@ -105,6 +133,30 @@ class PhotographController extends Controller
         $photo->saveOrFail();
 
         return redirect()->back()->with('status', 'Photograph successfully saved.');
+    }
+
+    /**
+     * Updates a checklist item for the photograph.
+     *
+     * @param Request $request
+     * @param PhotographChecklist $checklist
+     * @return \Illuminate\Http\JsonResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    public function updateChecklistItem(Request $request, PhotographChecklist $checklist)
+    {
+        // Validation
+        $data = $this->validate($request, [
+            'completed' => 'required|boolean',
+        ]);
+
+        // Update the checklist
+        $checklist->fill($data);
+        $checklist->saveOrFail();
+
+        // Return the response
+        return response()->json($checklist, 200);
     }
 
     /**

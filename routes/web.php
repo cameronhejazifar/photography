@@ -44,6 +44,7 @@ Route::post('/profile/fineartamerica', [ProfileController::class, 'updateFineArt
 // Photo Management
 Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
 Route::post('/photograph', [PhotographController::class, 'create'])->name('photograph.create');
+Route::post('/photograph-checklist/{checklist}', [PhotographController::class, 'updateChecklistItem'])->middleware('is-owner:checklist')->name('photograph.update-checklist');
 Route::post('/photograph/{photo}', [PhotographController::class, 'update'])->middleware('is-owner:photo')->name('photograph.update');
 Route::get('/photograph/{photo}', [PhotographController::class, 'showManagePhotographForm'])->middleware('is-owner:photo')->name('photograph.manage');
 Route::post('/photograph/{photo}/upload-edit', [PhotographController::class, 'uploadEdit'])->middleware('is-owner:photo')->name('photograph.upload-edit');

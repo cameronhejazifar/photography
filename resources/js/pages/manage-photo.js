@@ -2,6 +2,35 @@ Dropzone.autoDiscover = false;
 
 $(document).ready(() => {
 
+    // Checklist items
+    $('.checklist-item').on('change', (e) => {
+        const checkbox = $(e.target);
+        const spinner = checkbox.siblings('.animate-spin');
+        const csrf = checkbox.siblings('[name=_token]');
+        checkbox.prop('disabled', true);
+        spinner.removeClass('hidden');
+        $.ajax({
+            url: checkbox.data('action'),
+            timeout: 60000,
+            cache: false,
+            type: checkbox.data('method'),
+            data: {
+                // csrf
+                _token: csrf.val(),
+                // form data
+                completed: checkbox.prop('checked') ? 1 : 0,
+            },
+            complete() {
+                checkbox.prop('disabled', false);
+                spinner.addClass('hidden');
+            },
+            error(xhr, status, error) {
+                alert(xhr.responseText);
+                checkbox.prop('checked', !checkbox.prop('checked'));
+            },
+        });
+    });
+
     // Publish Button
     $('#publish-button').on('click', (e) => {
         e.preventDefault();

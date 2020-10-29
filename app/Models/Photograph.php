@@ -45,6 +45,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereFineartamericaUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereInstagramUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereRedbubbleUrl($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographChecklist[] $photographChecklists
+ * @property-read int|null $photograph_checklists_count
  */
 class Photograph extends Model
 {
@@ -105,6 +107,16 @@ class Photograph extends Model
     public function flickrPosts()
     {
         return $this->hasMany(FlickrPost::class);
+    }
+
+    /**
+     * Returns all PhotographChecklist items that belong to the photograph.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographChecklists()
+    {
+        return $this->hasMany(PhotographChecklist::class)->orderBy('sequence_number', 'asc');
     }
 
     /**
