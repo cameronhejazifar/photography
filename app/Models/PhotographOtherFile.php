@@ -59,7 +59,7 @@ class PhotographOtherFile extends Model
     protected static $unguarded = true;
 
     /**
-     * Get the User this icon belongs to.
+     * Get the User this file belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -69,7 +69,7 @@ class PhotographOtherFile extends Model
     }
 
     /**
-     * Get the Photograph this icon belongs to.
+     * Get the Photograph this file belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

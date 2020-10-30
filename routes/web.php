@@ -54,6 +54,8 @@ Route::get('/photograph/download-other/{file}', [PhotographController::class, 'd
 Route::post('/photograph/update-other/{file}', [PhotographController::class, 'updateOther'])->middleware('is-owner:file')->name('photograph.update-other');
 Route::get('/photograph/delete-other/{file}', [PhotographController::class, 'deleteOther'])->middleware('is-owner:file')->name('photograph.delete-other');
 Route::post('/photograph/{photo}/social-links', [PhotographController::class, 'updateSocialLinks'])->middleware('is-owner:photo')->name('photograph.update.social-links');
+Route::post('/photograph/{photo}/collection', [PhotographController::class, 'addToCollection'])->middleware('is-owner:photo')->name('photograph.collection');
+Route::post('/photograph-collection/{collection}', [PhotographController::class, 'deleteCollection'])->middleware('is-owner:collection')->name('photograph.collection.delete');
 
 // Google Drive
 Route::get('/googledrive/oauth', [GoogleDriveController::class, 'tryOAuth'])->name('googledrive');

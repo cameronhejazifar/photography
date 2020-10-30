@@ -1,5 +1,7 @@
 <?php
 $checklists = $photo->photographChecklists;
+$photoCollections = $photo->photographCollections;
+$userCollections = Auth::user()->photographCollections()->select('title')->distinct()->get();
 
 $googleOAuth = Auth::user()->googleDriveOauth()->latest()->first();
 $hasGoogleAccess = $googleOAuth && !$googleOAuth->expires_at->isPast();
@@ -37,10 +39,10 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
             </p>
         @endif
 
-        <!-- Checklist Section -->
+        <!-- Top Section -->
         @if($checklists->count() > 0)
             <div class="flex flex-row flex-wrap justify-start items-start mb-8">
-                <div class="w-full md:w-1/2 md:pr-10">
+                <div class="w-full md:w-1/2 md:pr-10 md:border-r border-gray-700">
 
                     <h3 class="text-lg mb-1">Checklist</h3>
 
@@ -65,10 +67,77 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                     </ul>
 
                 </div>
+
+                <div class="w-full md:w-1/2 md:pl-10 mt-10 md:mt-0">
+                    <span class="block md:hidden w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+                    <h3 class="text-lg mb-1">Collections</h3>
+
+                    <div class="flex flex-row flex-wrap items-start justify-start">
+                        @foreach($photoCollections as $collection)
+                            <button type="submit" data-method="POST"
+                                    data-action="{{ route('photograph.collection.delete', $collection->id) }}"
+                                    class="delete-collection mr-1 mb-1 max-w-full inline-flex flex-row justify-center items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                                <span>{{ $collection->title }}</span>
+                                <svg class="hidden animate-spin -mr-1 ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <svg class="trash-icon fill-current w-5 h-5 ml-3 -mr-2" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
+                            </button>
+                        @endforeach
+                    </div>
+
+                    <form id="add-collection-form" method="POST"
+                          action="{{ route('photograph.collection', $photo->id) }}">
+                        @csrf
+
+                        <div class="flex flex-row flex-no-wrap items-center justify-center">
+                            <div class="relative flex-grow mr-2">
+                                <select name="title"
+                                        class="block appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                                    <option selected disabled hidden value="">Select a Collection</option>
+                                    <optgroup label="New Collection">
+                                        <option value="_new">Create New</option>
+                                    </optgroup>
+                                    <optgroup label="Existing Collections">
+                                        @foreach($userCollections as $collection)
+                                            <option value="{{ $collection->title }}">{{ $collection->title }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 20 20">
+                                        <path
+                                            d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <button type="submit" id="add-collection-button"
+                                    class="inline-flex flex-row justify-center items-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                                <span>Add</span>
+                                <svg class="hidden animate-spin -mr-1 ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        @error('title')
+                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                        @enderror
+
+                    </form>
+
+                </div>
             </div>
         @endif
 
-        <!-- Top Section -->
+        <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+
+        <!-- Middle Section -->
         <div class="flex flex-row flex-wrap justify-start items-start">
 
             <!-- Left Column -->
@@ -433,7 +502,7 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                         <div class="relative w-full">
                             <select id="upload-raw-type"
                                     class="flex-grow-0 block appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
-                                <option selected disabled value="">Select an Option</option>
+                                <option selected disabled hidden value="">Select an Option</option>
                                 <option value="raw">
                                     Raw File (RAW, NEF, etc.)
                                 </option>

@@ -47,6 +47,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereRedbubbleUrl($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographChecklist[] $photographChecklists
  * @property-read int|null $photograph_checklists_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographCollection[] $photographCollections
+ * @property-read int|null $photograph_collections_count
  */
 class Photograph extends Model
 {
@@ -67,6 +69,16 @@ class Photograph extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Returns all photograph collections that belong to the photograph.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographCollections()
+    {
+        return $this->hasMany(PhotographCollection::class)->orderBy('title', 'asc');
     }
 
     /**

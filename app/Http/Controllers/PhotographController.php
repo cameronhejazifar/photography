@@ -6,6 +6,7 @@ use App\Classes\ExifData;
 use App\Classes\GoogleDrive;
 use App\Models\Photograph;
 use App\Models\PhotographChecklist;
+use App\Models\PhotographCollection;
 use App\Models\PhotographEdit;
 use App\Models\PhotographOtherFile;
 use Auth;
@@ -157,6 +158,53 @@ class PhotographController extends Controller
 
         // Return the response
         return response()->json($checklist, 200);
+    }
+
+    /**
+     * Adds the specified photograph to a collection.
+     *
+     * @param Request $request
+     * @param Photograph $photo
+     * @return \Illuminate\Http\JsonResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    public function addToCollection(Request $request, Photograph $photo)
+    {
+        // Validation
+        $data = $this->validate($request, [
+            'title' => 'required|string|between:2,255',
+        ]);
+
+        // Check if this photo already belongs to the specified collection
+        if ($photo->photographCollections()->where('title', '=', $data['title'])->count() > 0) {
+            throw ValidationException::withMessages([
+                'title' => "This photograph is already associated with the '{$data['title']}' collection",
+            ]);
+        }
+
+        // Create the collection
+        $collection = new PhotographCollection($data);
+        $collection->user()->associate(Auth::user());
+        $collection->photograph()->associate($photo);
+        $collection->saveOrFail();
+
+        // Return the response
+        return response()->json($collection, 200);
+    }
+
+    /**
+     * Deletes the specified photograph collection.
+     *
+     * @param PhotographCollection $collection
+     * @return \Illuminate\Http\JsonResponse
+     * @throws Throwable
+     * @throws ValidationException
+     */
+    public function deleteCollection(PhotographCollection $collection)
+    {
+        $collection->delete();
+        return response()->json();
     }
 
     /**

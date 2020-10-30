@@ -31,6 +31,88 @@ $(document).ready(() => {
         });
     });
 
+    // Photo Collection management
+    const newCollectionForm = $('#add-collection-form');
+    const newCollectionCsrf = newCollectionForm.find('[name=_token]');
+    const newCollectionSelect = newCollectionForm.find('[name=title]');
+    const newCollectionSubmit = newCollectionForm.find('[type=button]');
+    const newCollectionSpinner = newCollectionForm.find('.animate-spin');
+    $('.delete-collection').on('click', function(e) {
+        e.preventDefault();
+        const btn = $(this);
+        const btnSpinner = btn.find('.animate-spin');
+        const btnTrashIcon = btn.find('.trash-icon');
+        btnTrashIcon.addClass('hidden');
+        btnSpinner.removeClass('hidden');
+        btn.prop('disabled', true);
+        $.ajax({
+            url: btn.data('action'),
+            timeout: 60000,
+            cache: false,
+            type: btn.data('method'),
+            data: {
+                // csrf
+                _token: newCollectionCsrf.val(),
+            },
+            complete() {
+                btnTrashIcon.removeClass('hidden');
+                btnSpinner.addClass('hidden');
+                btn.prop('disabled', false);
+            },
+            success() {
+                btn.remove();
+            },
+            error(xhr) {
+                alert(xhr.responseText);
+            },
+        });
+    });
+    newCollectionSelect.on('change', () => {
+        if (newCollectionSelect.val() !== '_new') {
+            return;
+        }
+        let newTitle = window.prompt('Enter the new collection name', '');
+        if (typeof(newTitle) !== 'string' || newTitle.trim().length <= 0) {
+            newCollectionSelect.val('');
+            return;
+        }
+        const hasValue = newCollectionSelect.find("option[value='" + newTitle.replace(/'/ig, "\\'") + "']").length > 0;
+        if (hasValue) {
+            newCollectionSelect.val(newTitle);
+            return;
+        }
+        $('<option></option>').attr('value', newTitle).text(newTitle).appendTo(newCollectionSelect);
+        newCollectionSelect.val(newTitle);
+        newCollectionForm.submit();
+    });
+    newCollectionForm.on('submit', (e) => {
+        e.preventDefault();
+        newCollectionSubmit.prop('disabled', true);
+        newCollectionSpinner.removeClass('hidden');
+        $.ajax({
+            url: newCollectionForm.attr('action'),
+            timeout: 60000,
+            cache: false,
+            type: newCollectionForm.attr('method'),
+            data: {
+                // csrf
+                _token: newCollectionCsrf.val(),
+                // form data
+                title: newCollectionSelect.val(),
+            },
+            complete() {
+                newCollectionSubmit.prop('disabled', false);
+                newCollectionSpinner.addClass('hidden');
+            },
+            success() {
+                window.location.reload();
+            },
+            error(xhr, status, error) {
+                alert(xhr.responseText);
+            },
+        });
+    });
+
     // Publish Button
     $('#publish-button').on('click', (e) => {
         e.preventDefault();

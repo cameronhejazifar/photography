@@ -43,7 +43,7 @@ class PhotographChecklist extends Model
     protected static $unguarded = true;
 
     /**
-     * Get the User this icon belongs to.
+     * Get the User this checklist belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -53,7 +53,7 @@ class PhotographChecklist extends Model
     }
 
     /**
-     * Get the Photograph this icon belongs to.
+     * Get the Photograph this checklist belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

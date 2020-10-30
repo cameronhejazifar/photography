@@ -67,6 +67,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $fineartamerica_url
  * @method static \Illuminate\Database\Eloquent\Builder|User whereFineartamericaUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereNixplayUrl($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographCollection[] $photographCollections
+ * @property-read int|null $photograph_collections_count
  */
 class User extends Authenticatable
 {
@@ -157,6 +159,16 @@ class User extends Authenticatable
     public function flickrPosts()
     {
         return $this->hasMany(FlickrPost::class);
+    }
+
+    /**
+     * Returns all photograph collections that belong to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photographCollections()
+    {
+        return $this->hasMany(PhotographCollection::class)->orderBy('title', 'asc');
     }
 
     /**

@@ -48,7 +48,7 @@ class PhotographEdit extends ImageModel
     protected static $unguarded = true;
 
     /**
-     * Get the User this icon belongs to.
+     * Get the User this edit belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -58,7 +58,7 @@ class PhotographEdit extends ImageModel
     }
 
     /**
-     * Get the Photograph this icon belongs to.
+     * Get the Photograph this edit belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
