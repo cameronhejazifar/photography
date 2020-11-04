@@ -11,7 +11,10 @@ if ($collectionQuery) {
         ->toArray()
     );
 }
-$photos = $query->paginate(20);
+$photos = $query->paginate(1);
+if ($collectionQuery) {
+    $photos->appends('collection', $collectionQuery);
+}
 $hasPrevPage = !!($photos->previousPageUrl());
 $hasNextPage = !!($photos->nextPageUrl());
 $collections = Auth::user()->photographCollections()->select('title')->distinct()->get();
