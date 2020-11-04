@@ -42,20 +42,21 @@ Route::post('/profile/nixplay', [ProfileController::class, 'updateNixplay'])->na
 Route::post('/profile/fineartamerica', [ProfileController::class, 'updateFineArtAmerica'])->name('profile.update-fineartamerica');
 
 // Photo Management
-Route::get('/photograph/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
-Route::post('/photograph', [PhotographController::class, 'create'])->name('photograph.create');
-Route::post('/photograph-checklist/{checklist}', [PhotographController::class, 'updateChecklistItem'])->middleware('is-owner:checklist')->name('photograph.update-checklist');
-Route::post('/photograph/{photo}', [PhotographController::class, 'update'])->middleware('is-owner:photo')->name('photograph.update');
-Route::get('/photograph/{photo}', [PhotographController::class, 'showManagePhotographForm'])->middleware('is-owner:photo')->name('photograph.manage');
-Route::post('/photograph/{photo}/upload-edit', [PhotographController::class, 'uploadEdit'])->middleware('is-owner:photo')->name('photograph.upload-edit');
-Route::post('/photograph/{photo}/upload-other', [PhotographController::class, 'uploadOther'])->middleware('is-owner:photo')->name('photograph.upload-other');
-Route::get('/photograph/{photo}/download', [PhotographController::class, 'downloadPhotoEdit'])->middleware('is-owner:photo')->name('photograph.download');
-Route::get('/photograph/download-other/{file}', [PhotographController::class, 'downloadPhotoOtherFile'])->middleware('is-owner:file')->name('photograph.download-other');
-Route::post('/photograph/update-other/{file}', [PhotographController::class, 'updateOther'])->middleware('is-owner:file')->name('photograph.update-other');
-Route::get('/photograph/delete-other/{file}', [PhotographController::class, 'deleteOther'])->middleware('is-owner:file')->name('photograph.delete-other');
-Route::post('/photograph/{photo}/social-links', [PhotographController::class, 'updateSocialLinks'])->middleware('is-owner:photo')->name('photograph.update.social-links');
-Route::post('/photograph/{photo}/collection', [PhotographController::class, 'addToCollection'])->middleware('is-owner:photo')->name('photograph.collection');
-Route::post('/photograph-collection/{collection}', [PhotographController::class, 'deleteCollection'])->middleware('is-owner:collection')->name('photograph.collection.delete');
+Route::get('/photographs', [PhotographController::class, 'showPhotographList'])->name('photograph');
+Route::get('/photographs/new', [PhotographController::class, 'showNewPhotographForm'])->name('photograph.new');
+Route::post('/photographs', [PhotographController::class, 'create'])->name('photograph.create');
+Route::post('/photograph-checklists/{checklist}', [PhotographController::class, 'updateChecklistItem'])->middleware('is-owner:checklist')->name('photograph.update-checklist');
+Route::post('/photographs/{photo}', [PhotographController::class, 'update'])->middleware('is-owner:photo')->name('photograph.update');
+Route::get('/photographs/{photo}', [PhotographController::class, 'showManagePhotographForm'])->middleware('is-owner:photo')->name('photograph.manage');
+Route::post('/photographs/{photo}/upload-edit', [PhotographController::class, 'uploadEdit'])->middleware('is-owner:photo')->name('photograph.upload-edit');
+Route::post('/photographs/{photo}/upload-other', [PhotographController::class, 'uploadOther'])->middleware('is-owner:photo')->name('photograph.upload-other');
+Route::get('/photographs/{photo}/download', [PhotographController::class, 'downloadPhotoEdit'])->middleware('is-owner:photo')->name('photograph.download');
+Route::get('/photographs/download-others/{file}', [PhotographController::class, 'downloadPhotoOtherFile'])->middleware('is-owner:file')->name('photograph.download-other');
+Route::post('/photographs/update-others/{file}', [PhotographController::class, 'updateOther'])->middleware('is-owner:file')->name('photograph.update-other');
+Route::get('/photographs/delete-others/{file}', [PhotographController::class, 'deleteOther'])->middleware('is-owner:file')->name('photograph.delete-other');
+Route::post('/photographs/{photo}/social-links', [PhotographController::class, 'updateSocialLinks'])->middleware('is-owner:photo')->name('photograph.update.social-links');
+Route::post('/photographs/{photo}/collections', [PhotographController::class, 'addToCollection'])->middleware('is-owner:photo')->name('photograph.collection');
+Route::post('/photograph-collections/{collection}', [PhotographController::class, 'deleteCollection'])->middleware('is-owner:collection')->name('photograph.collection.delete');
 
 // Google Drive
 Route::get('/googledrive/oauth', [GoogleDriveController::class, 'tryOAuth'])->name('googledrive');

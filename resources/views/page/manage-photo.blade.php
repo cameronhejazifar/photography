@@ -26,9 +26,10 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
         <!-- Header -->
         <div class="flex flex-row flex-no-wrap items-center justify-between mb-10">
 
-            <h1 class="text-2xl">Manage Photo</span></h1>
+            <h1 class="text-2xl">Manage Photo</h1>
 
             <div>
+                <!-- Action Button Slot -->
             </div>
 
         </div>

@@ -29,7 +29,16 @@ class PhotographController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('uploadEdit');
+        $this->middleware('auth')->except('uploadEdit', 'showPhotographList');
+    }
+
+    public function showPhotographList()
+    {
+        if (Auth::check()) {
+            return view('page.manage-photo-list');
+        } else {
+            return view('page.view-photo-list');
+        }
     }
 
     /**

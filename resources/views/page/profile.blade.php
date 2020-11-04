@@ -9,10 +9,10 @@
 
             <h1 class="text-2xl">My Profile</h1>
 
-            <button type="button"
+            <a href="{{ route('photograph') }}"
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
                 View/Edit Photos
-            </button>
+            </a>
 
         </div>
 
