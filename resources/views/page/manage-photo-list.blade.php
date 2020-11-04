@@ -11,7 +11,7 @@ if ($collectionQuery) {
         ->toArray()
     );
 }
-$photos = $query->paginate(1);
+$photos = $query->paginate(20);
 if ($collectionQuery) {
     $photos->appends('collection', $collectionQuery);
 }
