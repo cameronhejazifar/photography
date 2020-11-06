@@ -10,6 +10,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            spacing: {
+                '72': '18rem',
+            },
             maxHeight: (theme, { breakpoints }) => ({
                 none: 'none',
                 xs: '20rem',
@@ -53,7 +56,9 @@ module.exports = {
             },
         },
     },
-    variants: {},
+    variants: {
+        opacity: ['responsive', 'hover', 'focus', 'disabled'],
+    },
     plugins: [
         require('tailwindcss-filters'),
     ],

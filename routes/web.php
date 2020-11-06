@@ -24,6 +24,8 @@ use App\Http\Controllers\ProfileController;
 // Basic
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/browse', [BrowseController::class, 'index'])->name('browse');
+Route::get('/browse/photographs', [BrowseController::class, 'getPhotographs'])->name('browse.photographs');
+Route::get('/browse/photographs/{photo}', [BrowseController::class, 'showPhotograph'])->name('browse.photograph');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 // Auth

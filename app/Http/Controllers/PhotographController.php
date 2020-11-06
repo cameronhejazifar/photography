@@ -34,11 +34,7 @@ class PhotographController extends Controller
 
     public function showPhotographList()
     {
-        if (Auth::check()) {
-            return view('page.manage-photo-list');
-        } else {
-            return view('page.view-photo-list');
-        }
+        return view('page.manage-photo-list');
     }
 
     /**

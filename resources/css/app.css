@@ -59,6 +59,32 @@ body::-webkit-scrollbar-thumb:hover {
     background-size: contain;
 }
 
+/* Scrollbar width */
+.horizontal-scroller::-webkit-scrollbar,
+.horizontal-scroller::-webkit-scrollbar {
+    height: 8px;
+}
+
+/* Scrollbar Track */
+.horizontal-scroller::-webkit-scrollbar-track,
+.horizontal-scroller::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 1);
+}
+
+/* Scrollbar Handle */
+.horizontal-scroller::-webkit-scrollbar-thumb,
+.horizontal-scroller::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .67);
+    border-radius: 4px;
+    transition: all 250ms ease-in-out;
+}
+
+/* Scrollbar Handle on hover */
+.horizontal-scroller::-webkit-scrollbar-thumb:hover,
+.horizontal-scroller::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
 
 /*
  * ===========================================================
