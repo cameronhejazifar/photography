@@ -1,15 +1,31 @@
+<?php
+$collectionQuery = request('collection', null);
+?>
+
 @extends('layout.main', ['navLogo' => true])
 
 @section('content')
 
-    <!-- Collection List -->
-    <div id="collection-list" class="horizontal-scroller w-full m-3 flex overflow-x-auto"
-         data-collection-endpoint="{{ route('browse.collections') }}">
-    </div>
+    @if(strlen($collectionQuery) <= 0)
+        <!-- Collection List -->
+        <div id="collections-header" class="hidden w-full mt-5 mb-2 text-center">
+            <h3 class="text-lg text-white font-bold uppercase">Collections</h3>
+        </div>
+        <div id="collection-list" class="horizontal-scroller w-full mb-20 px-1 flex flex-row items-center justify-start overflow-x-auto"
+             data-collection-endpoint="{{ route('browse.collections') }}">
+        </div>
+    @endif
 
     <!-- Photo List -->
+    <div id="photos-header" class="hidden w-full mt-5 mb-2 text-center">
+        @if(strlen($collectionQuery) > 0)
+            <h3 class="text-lg text-white font-bold uppercase">{{ $collectionQuery }} Collection</h3>
+        @else
+            <h3 class="text-lg text-white font-bold uppercase">Photographs</h3>
+        @endif
+    </div>
     <div id="photo-list" class="flex flex-row flex-wrap items-center justify-center mb-1"
-         data-initial-query="{{ route('browse.photographs') }}">
+         data-initial-query="{{ route('browse.photographs', ['collection' => $collectionQuery]) }}">
 
         <!-- Initial Loading Spinner -->
         <svg class="animate-spin m-10 h-12 w-12 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -29,5 +45,8 @@
             <span>Load More</span>
         </button>
     </div>
+
+    <!-- Spacer -->
+    <div class="block h-16 w-px"></div>
 
 @endsection

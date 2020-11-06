@@ -91,7 +91,7 @@ class Photograph extends Model
     {
         $query = $this->hasMany(PhotographEdit::class);
         if ($scaledSize) {
-            $query = $query->where('scaled_size', $scaledSize);
+            $query = $query->where('scaled_size', '=', $scaledSize);
         }
         return $query;
     }
@@ -106,7 +106,7 @@ class Photograph extends Model
     {
         $query = $this->hasMany(PhotographOtherFile::class);
         if ($otherType) {
-            $query = $query->where('other_type', $otherType);
+            $query = $query->where('other_type', '=', $otherType);
         }
         return $query;
     }
