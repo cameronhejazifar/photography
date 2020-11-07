@@ -41,6 +41,7 @@ module.exports = {
             letterSpacing: {
                 logo: '1rem',
                 'logo-mobile': '0.6rem',
+                about: '0.5rem',
             },
             zIndex: {
                 behind: '-1',
