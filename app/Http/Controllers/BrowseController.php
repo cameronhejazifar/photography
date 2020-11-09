@@ -20,13 +20,24 @@ class BrowseController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the photograph list.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
         return view('page.view-photo-list');
+    }
+
+    /**
+     * Show an individual photograph.
+     *
+     * @param Photograph $photo
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function show(Photograph $photo)
+    {
+        return view('page.view-photo', compact('photo'));
     }
 
     /**

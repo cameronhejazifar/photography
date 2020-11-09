@@ -31,13 +31,11 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property string|null $alias
  * @property \Illuminate\Support\Carbon|null $date_of_birth
  * @property string|null $biography
  * @property string|null $photograph_checklist
  * @property string $status
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereAlias($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereBiography($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhotographChecklist($value)

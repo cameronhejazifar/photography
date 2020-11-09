@@ -69,18 +69,6 @@
                         @enderror
                     </div>
 
-                    <!-- Alias -->
-                    <div class="mb-4">
-                        <label class="block text-gray-900 text-sm font-bold mb-2" for="alias">
-                            Alias (Display Name)
-                        </label>
-                        <input type="text" name="alias" placeholder="Alias" value="{{ old('alias', Auth::user()->alias) }}"
-                               class="appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
-                        @error('alias')
-                        <p class="text-red-700 text-sm italic">{{ $message }}</p>
-                        @enderror
-                    </div>
-
                     <!-- Date of Birth -->
                     <div class="mb-4">
                         <label class="block text-gray-900 text-sm font-bold mb-2" for="date_of_birth">
@@ -181,7 +169,7 @@
 
                     <!-- Icon -->
                     <img class="w-12 h-12 mb-4 rounded-full object-cover"
-                         alt="{{ Auth::user()->alias }}" title="{{ Auth::user()->alias }}"
+                         alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}"
                          src="{{ Auth::user()->profileIconURL() }}?refresh={{ Str::random(10) }}"/>
 
                     <!-- Icon + Image Selector -->
@@ -213,7 +201,7 @@
 
                     <!-- Picture -->
                     <img class="w-auto h-64 mb-4 object-contain"
-                         alt="{{ Auth::user()->alias }}" title="{{ Auth::user()->alias }}"
+                         alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}"
                          src="{{ Auth::user()->profilePictureURL() }}?refresh={{ Str::random(10) }}"/>
 
                     <!-- Image Selector -->

@@ -23,7 +23,7 @@ $users = App\Models\User::all();
 
                 <!-- Profile Picture -->
                 <img class="h-auto w-full md:w-1/3 {{ $even ? 'mr-0 md:mr-20' : 'ml-0 md:ml-20' }} mb-10 md:mb-0 object-contain"
-                     alt="{{ $user->alias }}" title="{{ $user->alias }}"
+                     alt="{{ $user->name }}" title="{{ $user->name }}"
                      src="{{ $user->profilePictureURL() }}"/>
 
                 <div class="flex-grow w-full md:w-auto">
@@ -42,39 +42,6 @@ $users = App\Models\User::all();
                         </div>
 
                         <p class="{{ $even ? 'ml-10 text-left' : 'mr-10 text-right' }} flex-grow">
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
-                            {{ $user->biography }}
                             {{ $user->biography }}
                         </p>
                     </div>
