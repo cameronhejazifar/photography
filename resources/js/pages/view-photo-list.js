@@ -140,7 +140,7 @@ $(document).ready(() => {
             // Creator
             const creator = $('<span/>');
             creator.addClass('absolute block left-0 bottom-0 w-full p-2 text-xs text-white text-right italic truncate pointer-events-none z-10');
-            creator.text(`by ${collection.created_by.alias}`);
+            creator.text(`by ${collection.created_by.name}`);
             creator.appendTo(divContent);
 
             // Load the image in the background
@@ -151,7 +151,6 @@ $(document).ready(() => {
 
             // Add collection to the list
             collectionList.append(container);
-            console.log(collection);
         });
     }
 
