@@ -35,6 +35,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereUserId($value)
  * @property-read \App\Models\Photograph $photograph
  * @property-read \App\Models\User $user
+ * @property int $original_width
+ * @property int $original_height
+ * @property int $scaled_width
+ * @property int $scaled_height
+ * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereOriginalHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereOriginalWidth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereScaledHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhotographEdit whereScaledWidth($value)
  */
 class PhotographEdit extends ImageModel
 {

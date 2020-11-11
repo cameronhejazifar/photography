@@ -257,6 +257,8 @@ class PhotographController extends Controller
 
             // Create the large scaled image
             $largeImage = Image::make($data['image']);
+            $originalWidth = $largeImage->width();
+            $originalHeight = $largeImage->height();
             $largeImage->resize(1536, 1536, function (Constraint $constraint) {
                 $constraint->aspectRatio();
             });
@@ -269,6 +271,10 @@ class PhotographController extends Controller
             $large->directory = 'edits-large';
             $large->filename = $photo->guid . '.jpg';
             $large->filetype = 'jpg';
+            $large->original_width = $originalWidth;
+            $large->original_height = $originalHeight;
+            $large->scaled_width = $largeImage->width();
+            $large->scaled_height = $largeImage->height();
             $large->user()->associate(Auth::user());
             $large->photograph()->associate($photo);
             $large->storeImage($largeImage);
@@ -293,6 +299,10 @@ class PhotographController extends Controller
             $medium->directory = 'edits-medium';
             $medium->filename = $photo->guid . '.jpg';
             $medium->filetype = 'jpg';
+            $medium->original_width = $originalWidth;
+            $medium->original_height = $originalHeight;
+            $medium->scaled_width = $mediumImage->width();
+            $medium->scaled_height = $mediumImage->height();
             $medium->user()->associate(Auth::user());
             $medium->photograph()->associate($photo);
             $medium->storeImage($mediumImage);
@@ -316,6 +326,10 @@ class PhotographController extends Controller
             $thumb->directory = 'edits-thumb';
             $thumb->filename = $photo->guid . '.jpg';
             $thumb->filetype = 'jpg';
+            $thumb->original_width = $originalWidth;
+            $thumb->original_height = $originalHeight;
+            $thumb->scaled_width = $thumbImage->width();
+            $thumb->scaled_height = $thumbImage->height();
             $thumb->user()->associate(Auth::user());
             $thumb->photograph()->associate($photo);
             $thumb->storeImage($thumbImage);

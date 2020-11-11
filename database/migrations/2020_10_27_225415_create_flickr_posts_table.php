@@ -15,6 +15,7 @@ class CreateFlickrPostsTable extends Migration
         Schema::create('flickr_posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('flickr_oauth_id')->index();
             $table->unsignedBigInteger('photograph_id')->index();
             $table->string('flickr_photo_id')->nullable();
             $table->text('image_path')->nullable();

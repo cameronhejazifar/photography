@@ -58,4 +58,14 @@ class FlickrOauth extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Returns all Flickr Posts that belong to the OAuth.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flickrPosts()
+    {
+        return $this->hasMany(FlickrPost::class);
+    }
 }

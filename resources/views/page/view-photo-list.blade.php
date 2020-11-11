@@ -6,7 +6,14 @@ $collectionQuery = request('collection', null);
 
 @section('content')
 
-    @if(strlen($collectionQuery) <= 0)
+    @if(strlen($collectionQuery) > 0)
+        <!-- Back Button -->
+        <div class="w-full mt-10 mb-2 px-5 lg:px-10">
+            <a href="{{ route('browse') }}" class="text-white uppercase text-xs font-bold opacity-75 hover:opacity-100">
+                &larr; Back to All Photos
+            </a>
+        </div>
+    @else
         <!-- Collection List -->
         <div id="collections-header" class="hidden w-full mt-5 mb-2 text-center">
             <h3 class="text-lg text-white font-bold uppercase">Collections</h3>

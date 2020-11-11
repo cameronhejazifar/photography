@@ -178,6 +178,7 @@ class FlickrController extends Controller
         /** @var FlickrClient $flickr */
         $flickr = app()->make(FlickrClient::class);
         $post = new FlickrPost($data);
+        $post->flickrOauth()->associate($oauth);
         $post->user()->associate(Auth::user());
         $post->photograph()->associate($photo);
         $post->image_path = $photo->photographEdits('medium')->latest()->first()->getImagePath();

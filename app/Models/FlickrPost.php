@@ -76,7 +76,7 @@ class FlickrPost extends Model
     protected static $unguarded = true;
 
     /**
-     * Get the User this oauth belongs to.
+     * Get the User this post belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -86,12 +86,34 @@ class FlickrPost extends Model
     }
 
     /**
-     * Get the Photograph this oauth belongs to.
+     * Get the OAuth this post belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function flickrOauth()
+    {
+        return $this->belongsTo(FlickrOauth::class);
+    }
+
+    /**
+     * Get the Photograph this post belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function photograph()
     {
         return $this->belongsTo(Photograph::class);
+    }
+
+    /**
+     * Builds the URL link to the Flickr post.
+     *
+     * @return string
+     */
+    public function flickrURL()
+    {
+        $userID = $this->flickrOauth->flickr_nsid;
+        $postID = $this->flickr_photo_id;
+        return "https://www.flickr.com/photos/{$userID}/{$postID}";
     }
 }

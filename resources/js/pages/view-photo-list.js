@@ -1,6 +1,10 @@
 $(document).ready(() => {
 
+    const photoList = $('#photo-list');
     const collectionList = $('#collection-list');
+    if (photoList.length <= 0) {
+        return;
+    }
     $.ajax({
         url: collectionList.data('collection-endpoint'),
         timeout: 60000,
@@ -19,7 +23,6 @@ $(document).ready(() => {
     let results = null;
 
     // Load the initial list
-    const photoList = $('#photo-list');
     const loadMoreBtnContainer = $('#load-more-button-container');
     const loadMoreBtn = $('#load-more-button');
     const loadMoreBtnSpinner = loadMoreBtn.find('.animate-spin');
@@ -120,9 +123,9 @@ $(document).ready(() => {
                 images[1].addClass('w-1/2 h-full');
             }
             if (collection.thumbnail_urls.length === 3) {
-                images[0].addClass('w-full h-full');
-                images[1].addClass('w-full h-1/2');
-                images[2].addClass('w-full h-1/2');
+                images[0].addClass('w-full h-1/2');
+                images[1].addClass('w-1/2 h-1/2');
+                images[2].addClass('w-1/2 h-1/2');
             }
             if (collection.thumbnail_urls.length === 4) {
                 images[0].addClass('w-1/2 h-1/2');
