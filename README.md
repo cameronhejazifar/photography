@@ -1,6 +1,6 @@
 # Photography
 
-## Installation
+## Configuration
 
 #### PHP Configuration
 
@@ -58,6 +58,16 @@ You'll also need to create [Flickr API Keys](https://www.flickr.com/services/api
 FLICKR_CONSUMER_KEY=<your-api-key>
 FLICKR_CONSUMER_SECRET_KEY=<your-api-secret>
 ```
+
+
+---
+
+
+
+## Installation
+
+#### ...
+
 
 ---
 
