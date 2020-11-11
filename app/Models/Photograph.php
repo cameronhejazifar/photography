@@ -47,6 +47,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $photograph_checklists_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PhotographCollection[] $photographCollections
  * @property-read int|null $photograph_collections_count
+ * @property string|null $etsy_url
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereEtsyUrl($value)
+ * @property string|null $ebay_url
+ * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereEbayUrl($value)
  */
 class Photograph extends Model
 {

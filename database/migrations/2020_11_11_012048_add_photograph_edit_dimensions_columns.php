@@ -27,7 +27,7 @@ class AddPhotographEditDimensionsColumns extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('photograph_edits', function (Blueprint $table) {
             $table->dropColumn('original_width');
             $table->dropColumn('original_height');
             $table->dropColumn('scaled_width');

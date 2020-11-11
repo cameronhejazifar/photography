@@ -62,7 +62,7 @@ $edit = $photo->photographEdits('large')->firstOrFail();
                 {{ $photo->description }}
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Purchase Buttons -->
             <div class="mb-8 lg:mb-16 flex flex-row flex-wrap items-start justify-start lg:justify-end">
 
                 <!-- Fine Art America (Prints) -->
@@ -81,6 +81,22 @@ $edit = $photo->photographEdits('large')->firstOrFail();
                     </a>
                 @endif
 
+                <!-- Etsy (Items) -->
+                @if(strlen($photo->etsy_url) > 0)
+                    <a href="{{ $photo->etsy_url }}" target="_blank"
+                       class="ml-2 mt-2 bg-orange-200 bg-opacity-10 hover:bg-opacity-25 text-orange-200 font-normal py-2 px-4 border border-orange-200 rounded-sm focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                        Buy on Etsy
+                    </a>
+                @endif
+
+                <!-- eBay (Auction) -->
+                @if(strlen($photo->ebay_url) > 0)
+                    <a href="{{ $photo->ebay_url }}" target="_blank"
+                       class="ml-2 mt-2 bg-blue-300 bg-opacity-10 hover:bg-opacity-25 text-blue-300 font-normal py-2 px-4 border border-blue-300 rounded-sm focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                        Buy on eBay
+                    </a>
+                @endif
+
             </div>
 
             <!-- External App Links -->
@@ -95,8 +111,6 @@ $edit = $photo->photographEdits('large')->firstOrFail();
                     </a>
                 @endif
 
-                <div class="flex-break"></div>
-
                 <!-- Flickr Button -->
                 @if($photo->flickrPosts()->count() > 0)
                     <a href="{{ $photo->flickrPosts()->first()->flickrURL() }}" target="_blank"
@@ -105,6 +119,7 @@ $edit = $photo->photographEdits('large')->firstOrFail();
                         <span>View On Flickr</span>
                     </a>
                 @endif
+
             </div>
 
         </div>

@@ -638,6 +638,9 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                             </button>
                         </form>
                     </div>
+                    @error('instagram_url')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
 
                     <!-- Fine Art America -->
                     @if(strlen(Auth::user()->fineartamerica_url) > 0)
@@ -667,6 +670,9 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                             </button>
                         </form>
                     @endif
+                    @error('fineartamerica_url')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
 
                     <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
 
@@ -694,6 +700,67 @@ $otherFiles = $photo->photographOtherFiles()->orderBy('other_type')->orderBy('fi
                             Save
                         </button>
                     </form>
+                    @error('redbubble_url')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+
+                    <!-- Etsy -->
+                    <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+                    <div class="block">
+                        <h3 class="text-lg mb-3">Etsy</h3>
+
+                        <a href="{{ strlen($photo->etsy_url) > 0 ? $photo->etsy_url : 'https://www.etsy.com' }}" target="_blank"
+                           class="inline-flex flex-no-wrap flex-row items-center text-blue-800 hover:text-blue-900 underline text-sm outline-none focus:shadow-outline">
+                            <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
+                            View Etsy Page
+                        </a>
+                    </div>
+                    <label class="block text-gray-900 text-sm font-bold mt-2" for="guid">
+                        Link to Etsy Page
+                    </label>
+                    <form method="POST" action="{{ route('photograph.update.social-links', $photo->id) }}"
+                          class="flex flex-row flex-no-wrap items-center justify-center">
+                        @csrf
+                        <input type="url" name="etsy_url" placeholder="https://"
+                               value="{{ old('etsy_url', $photo->etsy_url) }}"
+                               class="flex-grow mr-2 appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                            Save
+                        </button>
+                    </form>
+                    @error('etsy_url')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
+
+                    <!-- eBay -->
+                    <span class="block w-11/12 h-px my-10 mx-auto bg-gray-700"></span>
+                    <div class="block">
+                        <h3 class="text-lg mb-3">eBay</h3>
+
+                        <a href="{{ strlen($photo->ebay_url) > 0 ? $photo->ebay_url : 'https://www.ebay.com' }}" target="_blank"
+                           class="inline-flex flex-no-wrap flex-row items-center text-blue-800 hover:text-blue-900 underline text-sm outline-none focus:shadow-outline">
+                            <svg class="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path d="M38.288 10.297l1.414 1.415-14.99 14.99-1.414-1.414z"/><path d="M40 20h-2v-8h-8v-2h10z"/><path d="M35 38H15c-1.7 0-3-1.3-3-3V15c0-1.7 1.3-3 3-3h11v2H15c-.6 0-1 .4-1 1v20c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V24h2v11c0 1.7-1.3 3-3 3z"/></svg>
+                            View eBay Page
+                        </a>
+                    </div>
+                    <label class="block text-gray-900 text-sm font-bold mt-2" for="guid">
+                        Link to eBay Page
+                    </label>
+                    <form method="POST" action="{{ route('photograph.update.social-links', $photo->id) }}"
+                          class="flex flex-row flex-no-wrap items-center justify-center">
+                        @csrf
+                        <input type="url" name="ebay_url" placeholder="https://"
+                               value="{{ old('ebay_url', $photo->ebay_url) }}"
+                               class="flex-grow mr-2 appearance-none border border-gray-600 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-white transition-all duration-200 ease-in-out">
+                        <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-200 ease-in-out">
+                            Save
+                        </button>
+                    </form>
+                    @error('ebay_url')
+                    <p class="text-red-700 text-sm italic">{{ $message }}</p>
+                    @enderror
 
                 @endif
             </div>
