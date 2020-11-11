@@ -37,6 +37,9 @@ class BrowseController extends Controller
      */
     public function show(Photograph $photo)
     {
+        if ($photo->status !== 'active' || $photo->photographEdits()->count() <= 0) {
+            abort(404);
+        }
         return view('page.view-photo', compact('photo'));
     }
 

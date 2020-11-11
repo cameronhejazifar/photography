@@ -18,10 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $location
  * @property string $description
  * @property string $tags
- * @property int $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photograph whereGuid($value)

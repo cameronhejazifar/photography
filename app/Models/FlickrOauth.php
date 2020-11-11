@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|FlickrOauth whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FlickrOauth whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FlickrPost[] $flickrPosts
+ * @property-read int|null $flickr_posts_count
  */
 class FlickrOauth extends Model
 {

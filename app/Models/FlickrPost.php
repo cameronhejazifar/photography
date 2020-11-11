@@ -42,6 +42,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|FlickrPost whereFlickrPhotoId($value)
  * @property string|null $location
  * @method static \Illuminate\Database\Eloquent\Builder|FlickrPost whereLocation($value)
+ * @property int $flickr_oauth_id
+ * @property-read \App\Models\FlickrOauth $flickrOauth
+ * @method static \Illuminate\Database\Eloquent\Builder|FlickrPost whereFlickrOauthId($value)
  */
 class FlickrPost extends Model
 {
