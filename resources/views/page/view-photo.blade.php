@@ -46,6 +46,11 @@ $edit = $photo->photographEdits('large')->firstOrFail();
                 {{ $photo->name }}
             </h3>
 
+            <!-- Description -->
+            <div class="w-full mb-2 lg:mb-5 text-gray-300 text-left lg:text-right text-sm italic">
+                by {{ $photo->user->name }}
+            </div>
+
             <!-- Location -->
             <div class="w-full mb-2 lg:mb-5 flex flex-row items-center justify-start lg:justify-end text-gray-500 text-lg">
                 <svg class="w-4 h-4 flex-shrink-0 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>
