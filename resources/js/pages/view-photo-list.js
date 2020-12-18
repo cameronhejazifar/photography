@@ -90,18 +90,18 @@ $(document).ready(() => {
 
             // Loading Spinner
             const spinner = $('<span/>');
-            spinner.addClass('absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none transition-opacity duration-500 ease-in-out opacity-100');
+            spinner.addClass('absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none transition-all duration-500 ease-in-out opacity-100');
             spinner.html('<svg class="block w-8 h-8 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>');
             spinner.appendTo(container);
 
             // Content
             const divContent = $('<div/>');
-            divContent.addClass('absolute block top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out opacity-0');
+            divContent.addClass('absolute block top-0 left-0 w-full h-full transition-all duration-500 ease-in-out opacity-0');
             divContent.appendTo(container);
 
             // Thumbnail Container
             const thumbs = $('<div/>');
-            thumbs.addClass('absolute left-0 top-0 w-full h-full flex flex-row flex-wrap items-center justify-center shadow-lg z-0 opacity-25 hover:opacity-50 transition-opacity duration-300 ease-in-out');
+            thumbs.addClass('absolute left-0 top-0 w-full h-full flex flex-row flex-wrap items-center justify-center shadow-lg z-0 opacity-25 hover:opacity-50 transition-all duration-300 ease-in-out');
             thumbs.appendTo(divContent);
 
             // Thumbnails
@@ -169,23 +169,23 @@ $(document).ready(() => {
 
         // Container
         const container = $('<a/>');
-        container.addClass('relative block w-64 h-64 md:w-72 md:h-72 m-1 bg-black');
+        container.addClass('relative block w-64 h-64 md:w-72 md:h-72 m-2 bg-black');
         container.attr('href', photo.photograph_url);
 
         // Loading Spinner
         const spinner = $('<span/>');
-        spinner.addClass('absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none transition-opacity duration-500 ease-in-out opacity-100');
+        spinner.addClass('absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none transition-all duration-500 ease-in-out opacity-100');
         spinner.html('<svg class="block w-8 h-8 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>');
         spinner.appendTo(container);
 
         // Content
         const divContent = $('<div/>');
-        divContent.addClass('absolute block top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out opacity-0');
+        divContent.addClass('absolute block top-0 left-0 w-full h-full transition-all duration-500 ease-in-out opacity-0 transform hover:scale-105');
         divContent.appendTo(container);
 
         // Image
         const image = $('<span/>');
-        image.addClass('absolute block left-0 top-0 w-full h-full bg-transparent bg-center bg-no-repeat bg-cover shadow-lg z-0 opacity-75 hover:opacity-100 transition-opacity duration-300 ease-in-out');
+        image.addClass('absolute block left-0 top-0 w-full h-full bg-transparent bg-center bg-no-repeat bg-cover shadow-lg z-0 opacity-75 hover:opacity-100 transition-all duration-300 ease-in-out');
         image.css('background-image', 'url("' + edit.image_url + '")');
         image.appendTo(divContent);
 
